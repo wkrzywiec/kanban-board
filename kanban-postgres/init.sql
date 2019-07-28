@@ -1,0 +1,1 @@
+CREATE USER kanban WITH PASSWORD 'kanban';

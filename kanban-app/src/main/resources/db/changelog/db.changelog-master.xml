@@ -24,5 +24,14 @@
         <comment>Create table with task info</comment>
     </changeSet>
 
+    <changeSet id="2" author="Wojtek">
+        <sqlFile path="03_kanban_column.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+
+        <comment>Add kanban_id column to task table</comment>
+    </changeSet>
+
 </databaseChangeLog>
 

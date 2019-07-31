@@ -24,7 +24,7 @@
         <comment>Create table with task info</comment>
     </changeSet>
 
-    <changeSet id="2" author="Wojtek">
+    <changeSet id="3" author="Wojtek">
         <sqlFile path="03_kanban_column.sql"
                  relativeToChangelogFile="true"
                  splitStatements="true"

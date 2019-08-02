@@ -2,12 +2,11 @@ package com.wkrzywiec.medium.kanban.model;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class Kanban {
+public class Task {
 
     private Long id;
     private String title;
-    private List<Task> taskList;
+    private String description;
+    private String color;
 }

@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/kaban")
+@RequestMapping("/kanbans")
 public class KanbanController {
 
 
@@ -31,6 +31,11 @@ public class KanbanController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteKanban(){
+        return null;
+    }
+
+    @GetMapping("/{kanbanId}/tasks/")
+    public ResponseEntity<?> getAllTasksInKanban(@PathVariable Long kanbanId){
         return null;
     }
 }

@@ -2,6 +2,7 @@ package com.wkrzywiec.medium.kanban.controller;
 
 import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ public class KanbanController {
     private final KanbanRepository kanbanRepository;
 
     @GetMapping("/")
+    @ApiOperation(value="View a list of all Kanban boards", response = Kanban.class, responseContainer = "List")
     public ResponseEntity<?> getAllKanbans(){
         try {
             List<Kanban> kanbanList = new ArrayList<>();
@@ -31,6 +33,7 @@ public class KanbanController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation(value="Find a Kanban board info by its id", response = Kanban.class)
     public ResponseEntity<?> getKanban(@PathVariable Long id){
         try {
             Optional<Kanban> optKanban = kanbanRepository.findById(id);
@@ -45,6 +48,7 @@ public class KanbanController {
     }
 
     @PostMapping("/")
+    @ApiOperation(value="Save new Kanban board", response = Kanban.class)
     public ResponseEntity<?> createKanban(@RequestBody Kanban kanban){
         try {
             return new ResponseEntity<>(kanbanRepository.save(kanban), HttpStatus.CREATED);

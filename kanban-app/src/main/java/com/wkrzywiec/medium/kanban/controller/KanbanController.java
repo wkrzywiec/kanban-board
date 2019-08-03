@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/kanbans")
@@ -31,7 +32,16 @@ public class KanbanController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getKanban(@PathVariable Long id){
-        return null;
+        try {
+            Optional<Kanban> optKanban = kanbanRepository.findById(id);
+            if (optKanban.isPresent()) {
+                return new ResponseEntity<>(optKanban.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("No kanban found with id: " + id, HttpStatus.NOT_FOUND);
+            }
+        } catch (RuntimeException e) {
+            return returnError();
+        }
     }
 
     @PostMapping("/")

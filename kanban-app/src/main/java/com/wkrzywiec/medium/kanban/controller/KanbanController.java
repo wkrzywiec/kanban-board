@@ -58,9 +58,20 @@ public class KanbanController {
 
     }
 
-    @PutMapping("/")
-    public ResponseEntity<?> updateKanban(@RequestBody Kanban kanban){
-        return null;
+    @PutMapping("/{id}")
+    @ApiOperation(value="Update a Kanban board with specific id", response = Kanban.class)
+    public ResponseEntity<?> updateKanban(@PathVariable Long id, @RequestBody Kanban kanban){
+        try {
+            Optional<Kanban> optKanban = kanbanRepository.findById(id);
+            if (optKanban.isPresent()) {
+                kanban.setId(id);
+                return new ResponseEntity<>(kanbanRepository.save(kanban), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("No kanban found with id: " + id, HttpStatus.NOT_FOUND);
+            }
+        } catch (RuntimeException e) {
+            return returnError();
+        }
     }
 
     @DeleteMapping("/{id}")

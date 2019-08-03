@@ -18,10 +18,15 @@ public class KanbanController {
     private final KanbanRepository kanbanRepository;
 
     @GetMapping("/")
-    public ResponseEntity<List<Kanban>> getAllKanbans(){
-        List<Kanban> kanbanList = new ArrayList<>();
-        kanbanRepository.findAll().forEach(kanbanList::add);
-        return new ResponseEntity<>(kanbanList, HttpStatus.OK);
+    public ResponseEntity<?> getAllKanbans(){
+        try {
+            List<Kanban> kanbanList = new ArrayList<>();
+            kanbanRepository.findAll().forEach(kanbanList::add);
+            return new ResponseEntity<>(kanbanList, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return returnError();
+        }
+
     }
 
     @GetMapping("/{id}")
@@ -30,8 +35,13 @@ public class KanbanController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Kanban> createKanban(@RequestBody Kanban kanban){
-        return new ResponseEntity<>(kanbanRepository.save(kanban), HttpStatus.CREATED);
+    public ResponseEntity<?> createKanban(@RequestBody Kanban kanban){
+        try {
+            return new ResponseEntity<>(kanbanRepository.save(kanban), HttpStatus.CREATED);
+        } catch (RuntimeException e) {
+            return returnError();
+        }
+
     }
 
     @PutMapping("/")
@@ -47,5 +57,9 @@ public class KanbanController {
     @GetMapping("/{kanbanId}/tasks/")
     public ResponseEntity<?> getAllTasksInKanban(@PathVariable Long kanbanId){
         return null;
+    }
+
+    private ResponseEntity<String> returnError(){
+        return new ResponseEntity<>("Something went wrong :(", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

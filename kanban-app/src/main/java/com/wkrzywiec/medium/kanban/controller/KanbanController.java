@@ -64,8 +64,19 @@ public class KanbanController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteKanban(){
-        return null;
+    @ApiOperation(value="Delete Kanban board with specific id", response = String.class)
+    public ResponseEntity<?> deleteKanban(@PathVariable Long id){
+        try {
+            Optional<Kanban> optKanban = kanbanRepository.findById(id);
+            if (optKanban.isPresent()) {
+                kanbanRepository.delete(optKanban.get());
+                return new ResponseEntity<>(String.format("Kanban with id: %d was deleted", id), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("No kanban found with id: " + id, HttpStatus.NOT_FOUND);
+            }
+        } catch (RuntimeException e) {
+            return returnError();
+        }
     }
 
     @GetMapping("/{kanbanId}/tasks/")

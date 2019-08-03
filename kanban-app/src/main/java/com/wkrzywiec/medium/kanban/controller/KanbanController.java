@@ -1,6 +1,7 @@
 package com.wkrzywiec.medium.kanban.controller;
 
 import com.wkrzywiec.medium.kanban.model.Kanban;
+import com.wkrzywiec.medium.kanban.model.KanbanWithoutId;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -49,8 +50,10 @@ public class KanbanController {
 
     @PostMapping("/")
     @ApiOperation(value="Save new Kanban board", response = Kanban.class)
-    public ResponseEntity<?> createKanban(@RequestBody Kanban kanban){
+    public ResponseEntity<?> createKanban(@RequestBody KanbanWithoutId kanbanWithoutId){
         try {
+            Kanban kanban = new Kanban();
+            kanban.setTitle(kanbanWithoutId.getTitle());
             return new ResponseEntity<>(kanbanRepository.save(kanban), HttpStatus.CREATED);
         } catch (RuntimeException e) {
             return returnError();
@@ -60,11 +63,12 @@ public class KanbanController {
 
     @PutMapping("/{id}")
     @ApiOperation(value="Update a Kanban board with specific id", response = Kanban.class)
-    public ResponseEntity<?> updateKanban(@PathVariable Long id, @RequestBody Kanban kanban){
+    public ResponseEntity<?> updateKanban(@PathVariable Long id, @RequestBody KanbanWithoutId kanbanWithoutId){
         try {
             Optional<Kanban> optKanban = kanbanRepository.findById(id);
             if (optKanban.isPresent()) {
-                kanban.setId(id);
+                Kanban kanban = optKanban.get();
+                kanban.setTitle(kanbanWithoutId.getTitle());
                 return new ResponseEntity<>(kanbanRepository.save(kanban), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("No kanban found with id: " + id, HttpStatus.NOT_FOUND);

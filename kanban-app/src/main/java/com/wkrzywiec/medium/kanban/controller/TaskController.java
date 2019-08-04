@@ -1,6 +1,7 @@
 package com.wkrzywiec.medium.kanban.controller;
 
 import com.wkrzywiec.medium.kanban.model.Task;
+import com.wkrzywiec.medium.kanban.model.TaskWithoutId;
 import com.wkrzywiec.medium.kanban.repository.TaskRepository;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -47,8 +48,16 @@ public class TaskController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> createTask(@RequestBody Task task){
-        return null;
+    public ResponseEntity<?> createTask(@RequestBody TaskWithoutId taskWithoutId){
+        try {
+            Task task = new Task();
+            task.setTitle(taskWithoutId.getTitle());
+            task.setDescription(taskWithoutId.getDescription());
+            task.setColor(taskWithoutId.getColor());
+            return new ResponseEntity<>(taskRepository.save(task), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return errorResponse();
+        }
     }
 
     @PutMapping("/")

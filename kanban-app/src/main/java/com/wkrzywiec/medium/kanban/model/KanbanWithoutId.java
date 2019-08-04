@@ -1,5 +1,6 @@
 package com.wkrzywiec.medium.kanban.model;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,11 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "Kanban", description = "Kanban")
 public class KanbanWithoutId {
 
     private String title;
-
-    public static KanbanWithoutId createFromKanban(Kanban kanban) {
-        return new KanbanWithoutId(kanban.getTitle());
-    }
 }

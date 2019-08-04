@@ -28,7 +28,7 @@ public class KanbanController {
             List<Kanban> kanbanList = new ArrayList<>();
             kanbanRepository.findAll().forEach(kanbanList::add);
             return new ResponseEntity<>(kanbanList, HttpStatus.OK);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return errorResponse();
         }
 
@@ -44,7 +44,7 @@ public class KanbanController {
             } else {
                 return noKanbanFoundResponse(id);
             }
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return errorResponse();
         }
     }
@@ -56,7 +56,7 @@ public class KanbanController {
             Kanban kanban = new Kanban();
             kanban.setTitle(kanbanWithoutId.getTitle());
             return new ResponseEntity<>(kanbanRepository.save(kanban), HttpStatus.CREATED);
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return errorResponse();
         }
 
@@ -74,7 +74,7 @@ public class KanbanController {
             } else {
                 return noKanbanFoundResponse(id);
             }
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return errorResponse();
         }
     }
@@ -90,7 +90,7 @@ public class KanbanController {
             } else {
                 return noKanbanFoundResponse(id);
             }
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return errorResponse();
         }
     }
@@ -105,7 +105,7 @@ public class KanbanController {
             } else {
                 return noKanbanFoundResponse(kanbanId);
             }
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
             return errorResponse();
         }
     }

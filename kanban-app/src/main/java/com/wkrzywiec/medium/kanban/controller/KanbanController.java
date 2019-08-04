@@ -110,7 +110,21 @@ public class KanbanController {
         }
     }
 
-    //TODO findByTitle
+    @GetMapping("")
+    @ApiOperation(value="Find a Kanban board info by its title", response = Kanban.class)
+    public ResponseEntity<?> getKanbanByTitle(@RequestParam String title){
+        try {
+            Optional<Kanban> optKanban = kanbanRepository.findByTitle(title);
+            if (optKanban.isPresent()) {
+                return new ResponseEntity<>(optKanban.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("No kanban found with a title: " + title, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return errorResponse();
+        }
+    }
+
 
     private ResponseEntity<String> errorResponse(){
         return new ResponseEntity<>("Something went wrong :(", HttpStatus.INTERNAL_SERVER_ERROR);

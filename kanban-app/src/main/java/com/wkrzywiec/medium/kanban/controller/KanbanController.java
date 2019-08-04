@@ -31,7 +31,6 @@ public class KanbanController {
         } catch (Exception e) {
             return errorResponse();
         }
-
     }
 
     @GetMapping("/{id}")
@@ -59,7 +58,6 @@ public class KanbanController {
         } catch (Exception e) {
             return errorResponse();
         }
-
     }
 
     @PutMapping("/{id}")
@@ -124,7 +122,6 @@ public class KanbanController {
             return errorResponse();
         }
     }
-
 
     private ResponseEntity<String> errorResponse(){
         return new ResponseEntity<>("Something went wrong :(", HttpStatus.INTERNAL_SERVER_ERROR);

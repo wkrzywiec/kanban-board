@@ -29,7 +29,7 @@ public class KanbanController {
             kanbanRepository.findAll().forEach(kanbanList::add);
             return new ResponseEntity<>(kanbanList, HttpStatus.OK);
         } catch (RuntimeException e) {
-            return returnError();
+            return errorResponse();
         }
 
     }
@@ -42,10 +42,10 @@ public class KanbanController {
             if (optKanban.isPresent()) {
                 return new ResponseEntity<>(optKanban.get(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("No kanban found with id: " + id, HttpStatus.NOT_FOUND);
+                return noKanbanFoundResponse(id);
             }
         } catch (RuntimeException e) {
-            return returnError();
+            return errorResponse();
         }
     }
 
@@ -57,7 +57,7 @@ public class KanbanController {
             kanban.setTitle(kanbanWithoutId.getTitle());
             return new ResponseEntity<>(kanbanRepository.save(kanban), HttpStatus.CREATED);
         } catch (RuntimeException e) {
-            return returnError();
+            return errorResponse();
         }
 
     }
@@ -72,10 +72,10 @@ public class KanbanController {
                 kanban.setTitle(kanbanWithoutId.getTitle());
                 return new ResponseEntity<>(kanbanRepository.save(kanban), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("No kanban found with id: " + id, HttpStatus.NOT_FOUND);
+                return noKanbanFoundResponse(id);
             }
         } catch (RuntimeException e) {
-            return returnError();
+            return errorResponse();
         }
     }
 
@@ -88,10 +88,10 @@ public class KanbanController {
                 kanbanRepository.delete(optKanban.get());
                 return new ResponseEntity<>(String.format("Kanban with id: %d was deleted", id), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("No kanban found with id: " + id, HttpStatus.NOT_FOUND);
+                return noKanbanFoundResponse(id);
             }
         } catch (RuntimeException e) {
-            return returnError();
+            return errorResponse();
         }
     }
 
@@ -103,16 +103,20 @@ public class KanbanController {
             if (optKanban.isPresent()) {
                 return new ResponseEntity<>(optKanban.get().getTasks(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("No kanban found with id: " + kanbanId, HttpStatus.NOT_FOUND);
+                return noKanbanFoundResponse(kanbanId);
             }
         } catch (RuntimeException e) {
-            return returnError();
+            return errorResponse();
         }
     }
 
     //TODO findByTitle
 
-    private ResponseEntity<String> returnError(){
+    private ResponseEntity<String> errorResponse(){
         return new ResponseEntity<>("Something went wrong :(", HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    private ResponseEntity<String> noKanbanFoundResponse(Long id){
+        return new ResponseEntity<>("No kanban found with id: " + id, HttpStatus.NOT_FOUND);
     }
 }

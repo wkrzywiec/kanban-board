@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -19,4 +20,7 @@ public class Kanban {
     @Column(name = "title")
     private String title;
 
+    @OneToMany
+    @JoinColumn(name = "kanban_id")
+    private List<Task> tasks;
 }

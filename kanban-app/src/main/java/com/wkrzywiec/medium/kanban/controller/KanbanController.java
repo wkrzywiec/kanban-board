@@ -2,6 +2,7 @@ package com.wkrzywiec.medium.kanban.controller;
 
 import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.model.KanbanWithoutId;
+import com.wkrzywiec.medium.kanban.model.Task;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -95,9 +96,21 @@ public class KanbanController {
     }
 
     @GetMapping("/{kanbanId}/tasks/")
+    @ApiOperation(value="View a list of all tasks for a Kanban with provided id", response = Task.class, responseContainer = "List")
     public ResponseEntity<?> getAllTasksInKanban(@PathVariable Long kanbanId){
-        return null;
+         try {
+            Optional<Kanban> optKanban = kanbanRepository.findById(kanbanId);
+            if (optKanban.isPresent()) {
+                return new ResponseEntity<>(optKanban.get().getTasks(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("No kanban found with id: " + kanbanId, HttpStatus.NOT_FOUND);
+            }
+        } catch (RuntimeException e) {
+            return returnError();
+        }
     }
+
+    //TODO findByTitle
 
     private ResponseEntity<String> returnError(){
         return new ResponseEntity<>("Something went wrong :(", HttpStatus.INTERNAL_SERVER_ERROR);

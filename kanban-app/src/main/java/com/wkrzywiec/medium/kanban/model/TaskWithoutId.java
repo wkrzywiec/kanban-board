@@ -1,6 +1,5 @@
 package com.wkrzywiec.medium.kanban.model;
 
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(value = "Task", description = "Task")
 public class TaskWithoutId {
 
     @ApiModelProperty(position = 1)

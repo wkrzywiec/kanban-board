@@ -78,8 +78,19 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteTask(){
-        return null;
+    @ApiOperation(value="Delete Task with specific id", response = String.class)
+    public ResponseEntity<?> deleteTask(@PathVariable Long id){
+        try {
+            Optional<Task> optTask = taskRepository.findById(id);
+            if (optTask.isPresent()) {
+                taskRepository.delete(optTask.get());
+                return new ResponseEntity<>(String.format("Task with id: %d was deleted", id), HttpStatus.OK);
+            } else {
+                return noTaskFoundResponse(id);
+            }
+        } catch (Exception e) {
+            return errorResponse();
+        }
     }
 
     private ResponseEntity<String> errorResponse(){

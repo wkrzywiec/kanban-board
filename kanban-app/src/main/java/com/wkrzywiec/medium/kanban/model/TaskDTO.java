@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskWithoutId {
+public class TaskDTO {
 
     @ApiModelProperty(position = 1)
     private String title;

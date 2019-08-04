@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class KanbanWithoutId {
+public class KanbanDTO {
 
     private String title;
 }

@@ -41,7 +41,7 @@ public class KanbanControllerTest {
     }
 
     @Test
-    public void whenGetAllKanbans_thenRecieveSingle(){
+    public void whenGetAllKanbans_thenRecieveSingleKanban(){
 
         //given
         Kanban kanban = saveSingleKanban();
@@ -58,6 +58,26 @@ public class KanbanControllerTest {
         assertEquals(1, response.getBody().size());
         assertEquals(kanban.getTitle(), response.getBody().get(0).getTitle());
     }
+
+    @Test
+    public void whenGetSingleKanbanWithSpecificId_thenRecieveSingleKanban(){
+
+        //given
+        Kanban kanban = saveSingleKanban();
+
+        //when
+        ResponseEntity<Kanban> response = this.restTemplate.exchange(
+                baseURL + "kanbans/" + kanban.getId(),
+                HttpMethod.GET,
+                new HttpEntity<>(new HttpHeaders()),
+                Kanban.class);
+
+        //then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(kanban.getId(), response.getBody().getId());
+    }
+
+
 
     private Kanban saveSingleKanban(){
 

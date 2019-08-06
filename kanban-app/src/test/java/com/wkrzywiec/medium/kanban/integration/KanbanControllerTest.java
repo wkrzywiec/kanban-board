@@ -133,6 +133,25 @@ public class KanbanControllerTest {
         assertEquals(kanban.getTitle(), findKanbanByTitle(kanban.getTitle()).getTitle());
     }
 
+    @Test
+    public void whenPutSingleKanban_thenItIsUpdated(){
+
+        //given
+        Kanban kanban = saveSingleKanban();
+        kanban.setTitle(kanban.getTitle() + " Updated");
+
+        //when
+        ResponseEntity<Kanban> response = this.restTemplate.exchange(
+                baseURL + "kanbans/" + kanban.getId(),
+                HttpMethod.PUT,
+                new HttpEntity<>(kanban, new HttpHeaders()),
+                Kanban.class);
+
+        //then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(kanban.getTitle(), findKanbanByTitle(kanban.getTitle()).getTitle());
+    }
+
     private Kanban createSingleKanban(){
         Kanban kanban = new Kanban();
         int random = (int)(Math.random() * 100 + 1);

@@ -36,7 +36,7 @@ public class KanbanControllerTest {
     private TestRestTemplate restTemplate;
 
     @Autowired
-    KanbanRepository kanbanRepository;
+    private KanbanRepository kanbanRepository;
 
     @Before
     public void setUp(){

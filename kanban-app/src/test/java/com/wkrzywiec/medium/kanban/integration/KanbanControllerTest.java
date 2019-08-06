@@ -97,6 +97,24 @@ public class KanbanControllerTest {
         assertEquals(kanban.getTasks().get(0), response.getBody().get(0));
     }
 
+    @Test
+    public void whenGetSingleKanbanByTitle_thenRecieveSingleKanban(){
+
+        //given
+        Kanban kanban = saveSingleKanban();
+
+        //when
+        ResponseEntity<Kanban> response = this.restTemplate.exchange(
+                baseURL + "kanbans?title=" + kanban.getTitle(),
+                HttpMethod.GET,
+                new HttpEntity<>(new HttpHeaders()),
+                Kanban.class);
+
+        //then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(kanban.getId(), response.getBody().getId());
+    }
+
 
 
     private Kanban saveSingleKanbanWithOneTask(){

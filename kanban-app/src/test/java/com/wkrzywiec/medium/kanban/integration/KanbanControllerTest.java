@@ -1,6 +1,7 @@
 package com.wkrzywiec.medium.kanban.integration;
 
 import com.wkrzywiec.medium.kanban.model.Kanban;
+import com.wkrzywiec.medium.kanban.model.KanbanDTO;
 import com.wkrzywiec.medium.kanban.model.Task;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import org.junit.Before;
@@ -125,7 +126,7 @@ public class KanbanControllerTest {
         ResponseEntity<Kanban> response = this.restTemplate.exchange(
                 baseURL + "kanbans/",
                 HttpMethod.POST,
-                new HttpEntity<>(kanban, new HttpHeaders()),
+                new HttpEntity<>(convertKanbanToDTO(kanban), new HttpHeaders()),
                 Kanban.class);
 
         //then
@@ -144,7 +145,7 @@ public class KanbanControllerTest {
         ResponseEntity<Kanban> response = this.restTemplate.exchange(
                 baseURL + "kanbans/" + kanban.getId(),
                 HttpMethod.PUT,
-                new HttpEntity<>(kanban, new HttpHeaders()),
+                new HttpEntity<>(convertKanbanToDTO(kanban), new HttpHeaders()),
                 Kanban.class);
 
         //then
@@ -182,5 +183,11 @@ public class KanbanControllerTest {
 
     private Kanban findKanbanByTitle(String title) {
         return kanbanRepository.findByTitle(title).get();
+    }
+
+    private KanbanDTO convertKanbanToDTO(Kanban kanban) {
+        KanbanDTO kanbanDTO = new KanbanDTO();
+        kanbanDTO.setTitle(kanban.getTitle());
+        return kanbanDTO;
     }
 }

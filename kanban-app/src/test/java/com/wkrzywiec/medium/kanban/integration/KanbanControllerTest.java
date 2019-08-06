@@ -115,21 +115,40 @@ public class KanbanControllerTest {
         assertEquals(kanban.getId(), response.getBody().getId());
     }
 
+    @Test
+    public void whenPostSingleKanban_thenItIsStoredInDb(){
 
+        //given
+        Kanban kanban = createSingleKanban();
+
+        //when
+        ResponseEntity<Kanban> response = this.restTemplate.exchange(
+                baseURL + "kanbans/",
+                HttpMethod.POST,
+                new HttpEntity<>(kanban, new HttpHeaders()),
+                Kanban.class);
+
+        //then
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(kanban.getTitle(), findKanbanByTitle(kanban.getTitle()).getTitle());
+    }
+
+    private Kanban createSingleKanban(){
+        Kanban kanban = new Kanban();
+        int random = (int)(Math.random() * 100 + 1);
+        kanban.setTitle("Test Kanban " + random);
+        return kanban;
+    }
+
+    private Kanban saveSingleKanban(){
+        return kanbanRepository.save(createSingleKanban());
+    }
 
     private Kanban saveSingleKanbanWithOneTask(){
         Kanban kanban = saveSingleKanban();
         List<Task> taskList = new ArrayList<>();
         taskList.add(createSingleTask());
         kanban.setTasks(taskList);
-        return kanbanRepository.save(kanban);
-    }
-
-    private Kanban saveSingleKanban(){
-
-        Kanban kanban = new Kanban();
-        int random = (int)(Math.random() * 100 + 1);
-        kanban.setTitle("Test Kanban " + random);
         return kanbanRepository.save(kanban);
     }
 
@@ -140,5 +159,9 @@ public class KanbanControllerTest {
         task.setDescription("Description " + random);
         task.setColor("Color " + random);
         return task;
+    }
+
+    private Kanban findKanbanByTitle(String title) {
+        return kanbanRepository.findByTitle(title).get();
     }
 }

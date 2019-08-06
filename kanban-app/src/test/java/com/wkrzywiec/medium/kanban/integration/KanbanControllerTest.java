@@ -1,6 +1,7 @@
 package com.wkrzywiec.medium.kanban.integration;
 
 import com.wkrzywiec.medium.kanban.model.Kanban;
+import com.wkrzywiec.medium.kanban.model.Task;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,7 @@ import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -60,7 +62,7 @@ public class KanbanControllerTest {
     }
 
     @Test
-    public void whenGetSingleKanbanWithSpecificId_thenRecieveSingleKanban(){
+    public void whenGetSingleKanbanById_thenRecieveSingleKanban(){
 
         //given
         Kanban kanban = saveSingleKanban();
@@ -77,7 +79,33 @@ public class KanbanControllerTest {
         assertEquals(kanban.getId(), response.getBody().getId());
     }
 
+    @Test
+    public void whenGetAllTasksForKanbanById_thenRecieveTasksList(){
 
+        //given
+        Kanban kanban = saveSingleKanbanWithOneTask();
+
+        //when
+        ResponseEntity<List<Task>> response = this.restTemplate.exchange(
+                baseURL + "kanbans/" + kanban.getId() + "/tasks/",
+                HttpMethod.GET,
+                new HttpEntity<>(new HttpHeaders()),
+                new ParameterizedTypeReference<List<Task>>() {});
+
+        //then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(kanban.getTasks().get(0), response.getBody().get(0));
+    }
+
+
+
+    private Kanban saveSingleKanbanWithOneTask(){
+        Kanban kanban = saveSingleKanban();
+        List<Task> taskList = new ArrayList<>();
+        taskList.add(createSingleTask());
+        kanban.setTasks(taskList);
+        return kanbanRepository.save(kanban);
+    }
 
     private Kanban saveSingleKanban(){
 
@@ -85,5 +113,14 @@ public class KanbanControllerTest {
         int random = (int)(Math.random() * 100 + 1);
         kanban.setTitle("Test Kanban " + random);
         return kanbanRepository.save(kanban);
+    }
+
+    private Task createSingleTask() {
+        Task task = new Task();
+        int random = (int)(Math.random() * 100 + 1);
+        task.setTitle("Title " + random);
+        task.setDescription("Description " + random);
+        task.setColor("Color " + random);
+        return task;
     }
 }

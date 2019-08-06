@@ -23,7 +23,7 @@ public class Kanban {
     @ApiModelProperty(position = 2)
     private String title;
 
-    @OneToMany
+    @OneToMany(cascade = {CascadeType.ALL})
     @JoinColumn(name = "kanban_id")
     @ApiModelProperty(position = 3)
     private List<Task> tasks;

@@ -19,7 +19,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -131,7 +131,7 @@ public class KanbanControllerTest {
 
         //then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(kanban.getTitle(), findKanbanByTitle(kanban.getTitle()).getTitle());
+        assertEquals(kanban.getTitle(), findKanbanInDbByTitle(kanban.getTitle()).getTitle());
     }
 
     @Test
@@ -150,7 +150,26 @@ public class KanbanControllerTest {
 
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(kanban.getTitle(), findKanbanByTitle(kanban.getTitle()).getTitle());
+        assertEquals(kanban.getTitle(), findKanbanInDbByTitle(kanban.getTitle()).getTitle());
+    }
+
+    @Test
+    public void whenDeleteSingleKanbanById_thenItIsDeletedFromDb(){
+
+        //given
+        Kanban kanban = saveSingleKanban();
+
+        //when
+        ResponseEntity<String> response = this.restTemplate.exchange(
+                baseURL + "kanbans/" + kanban.getId(),
+                HttpMethod.DELETE,
+                new HttpEntity<>(new HttpHeaders()),
+                String.class);
+
+        //then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(String.format("Kanban with id: %d was deleted", kanban.getId()), response.getBody());
+        assertFalse(kanbanRepository.findByTitle(kanban.getTitle()).isPresent());
     }
 
     private Kanban createSingleKanban(){
@@ -181,7 +200,7 @@ public class KanbanControllerTest {
         return task;
     }
 
-    private Kanban findKanbanByTitle(String title) {
+    private Kanban findKanbanInDbByTitle(String title) {
         return kanbanRepository.findByTitle(title).get();
     }
 

@@ -125,11 +125,11 @@ public class TaskControllerTest {
 
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(task.getTitle(), taskRepository.findById(response.getBody().getId()).get().getTitle());
+        assertEquals(task.getTitle(), taskRepository.findById(task.getId()).get().getTitle());
     }
 
     @Test
-    public void whenDeleteSingleKanbanById_thenItIsDeletedFromDb(){
+    public void whenDeleteSingleTaskById_thenItIsDeletedFromDb(){
 
         //given
         Task task = saveSingleTask();

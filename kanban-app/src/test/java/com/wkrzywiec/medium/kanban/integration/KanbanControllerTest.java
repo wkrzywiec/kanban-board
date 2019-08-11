@@ -58,8 +58,7 @@ public class KanbanControllerTest {
 
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(1, response.getBody().size());
-        assertEquals(kanban.getTitle(), response.getBody().get(0).getTitle());
+        assertTrue(response.getBody().size() >= 1);
     }
 
     @Test
@@ -78,6 +77,7 @@ public class KanbanControllerTest {
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(kanban.getId(), response.getBody().getId());
+        assertEquals(kanban.getTitle(), response.getBody().getTitle());
     }
 
     @Test
@@ -114,6 +114,7 @@ public class KanbanControllerTest {
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(kanban.getId(), response.getBody().getId());
+        assertEquals(kanban.getTitle(), response.getBody().getTitle());
     }
 
     @Test
@@ -131,7 +132,15 @@ public class KanbanControllerTest {
 
         //then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(kanban.getTitle(), findKanbanInDbByTitle(kanban.getTitle()).getTitle());
+
+            // check response Kanban
+        Kanban responseKanban = response.getBody();
+        assertNotNull(responseKanban.getId());
+        assertEquals(kanban.getTitle(), responseKanban.getTitle());
+
+            // check Kanban saved in db
+        Kanban savedKanban = kanbanRepository.findById(responseKanban.getId()).get();
+        assertEquals(kanban.getTitle(), savedKanban.getTitle());
     }
 
     @Test
@@ -150,7 +159,7 @@ public class KanbanControllerTest {
 
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(kanban.getTitle(), findKanbanInDbByTitle(kanban.getTitle()).getTitle());
+        assertEquals(kanban.getTitle(), kanbanRepository.findById(kanban.getId()).get().getTitle());
     }
 
     @Test
@@ -169,13 +178,14 @@ public class KanbanControllerTest {
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(String.format("Kanban with id: %d was deleted", kanban.getId()), response.getBody());
-        assertFalse(kanbanRepository.findByTitle(kanban.getTitle()).isPresent());
+        assertFalse(kanbanRepository.findById(kanban.getId()).isPresent());
     }
 
     private Kanban createSingleKanban(){
         Kanban kanban = new Kanban();
         int random = (int)(Math.random() * 100 + 1);
         kanban.setTitle("Test Kanban " + random);
+        kanban.setTasks(new ArrayList<>());
         return kanban;
     }
 
@@ -198,9 +208,6 @@ public class KanbanControllerTest {
         task.setDescription("Description " + random);
         task.setColor("Color " + random);
         return task;
-    }
-    private Kanban findKanbanInDbByTitle(String title) {
-        return kanbanRepository.findByTitle(title).get();
     }
 
     private KanbanDTO convertKanbanToDTO(Kanban kanban) {

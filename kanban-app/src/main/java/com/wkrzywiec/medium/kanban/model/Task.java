@@ -17,7 +17,6 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @ApiModelProperty(position = 1)
-    @ToString.Exclude
     private Long id;
 
     @Column(name = "title")

@@ -44,7 +44,7 @@ public class KanbanControllerTest {
     }
 
     @Test
-    public void whenGetAllKanbans_thenRecieveSingleKanban(){
+    public void whenGetAllKanbans_thenReceiveSingleKanban(){
 
         //given
         Kanban kanban = saveSingleKanban();
@@ -63,7 +63,7 @@ public class KanbanControllerTest {
     }
 
     @Test
-    public void whenGetSingleKanbanById_thenRecieveSingleKanban(){
+    public void whenGetSingleKanbanById_thenReceiveSingleKanban(){
 
         //given
         Kanban kanban = saveSingleKanban();
@@ -81,7 +81,7 @@ public class KanbanControllerTest {
     }
 
     @Test
-    public void whenGetAllTasksForKanbanById_thenRecieveTasksList(){
+    public void whenGetAllTasksForKanbanById_thenReceiveTasksList(){
 
         //given
         Kanban kanban = saveSingleKanbanWithOneTask();
@@ -99,7 +99,7 @@ public class KanbanControllerTest {
     }
 
     @Test
-    public void whenGetSingleKanbanByTitle_thenRecieveSingleKanban(){
+    public void whenGetSingleKanbanByTitle_thenReceiveSingleKanban(){
 
         //given
         Kanban kanban = saveSingleKanban();

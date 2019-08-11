@@ -41,7 +41,7 @@ public class TaskControllerTest {
     }
 
     @Test
-    public void whenGetAllTasks_thenRecieveSingleTask(){
+    public void whenGetAllTasks_thenReceiveSingleTask(){
 
         //given
         Task task = saveSingleTask();
@@ -57,6 +57,24 @@ public class TaskControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(1, response.getBody().size());
         assertEquals(task, response.getBody().get(0));
+    }
+
+    @Test
+    public void whenGetSingleTaskById_thenReceiveSingleTask(){
+
+        //given
+        Task task = saveSingleTask();
+
+        //when
+        ResponseEntity<Task> response = this.restTemplate.exchange(
+                baseURL + "tasks/" + task.getId(),
+                HttpMethod.GET,
+                new HttpEntity<>(new HttpHeaders()),
+                Task.class);
+
+        //then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(task, response.getBody());
     }
 
     private Task createSingleTask(){

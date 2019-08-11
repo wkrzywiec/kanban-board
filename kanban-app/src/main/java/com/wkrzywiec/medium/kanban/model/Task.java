@@ -3,9 +3,9 @@ package com.wkrzywiec.medium.kanban.model;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Optional;
 
 @Data
 @Entity
@@ -17,6 +17,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @ApiModelProperty(position = 1)
+    @ToString.Exclude
     private Long id;
 
     @Column(name = "title")

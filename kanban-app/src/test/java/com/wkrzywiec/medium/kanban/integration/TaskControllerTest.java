@@ -1,6 +1,7 @@
 package com.wkrzywiec.medium.kanban.integration;
 
 import com.wkrzywiec.medium.kanban.model.Task;
+import com.wkrzywiec.medium.kanban.model.TaskDTO;
 import com.wkrzywiec.medium.kanban.repository.TaskRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,6 +78,25 @@ public class TaskControllerTest {
         assertEquals(task, response.getBody());
     }
 
+    @Test
+    public void whenPostSingleTask_thenItIsStoredInDb(){
+
+        //given
+        Task task = saveSingleTask();
+
+        //when
+        ResponseEntity<Task> response = this.restTemplate.exchange(
+                baseURL + "tasks/",
+                HttpMethod.POST,
+                new HttpEntity<>(convertTaskToDTO(task), new HttpHeaders()),
+                Task.class);
+
+        //then
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(task.toString(), response.getBody().toString());
+        assertEquals(task.toString(), taskRepository.findById(response.getBody().getId()).get().toString());
+    }
+
     private Task createSingleTask(){
         Task task = new Task();
         int random = (int)(Math.random() * 100 + 1);
@@ -84,6 +104,14 @@ public class TaskControllerTest {
         task.setDescription("Description " + random);
         task.setColor("Color " + random);
         return task;
+    }
+
+    private TaskDTO convertTaskToDTO(Task task) {
+        return new TaskDTO().builder()
+                .title(task.getTitle())
+                .description(task.getDescription())
+                .color(task.getColor())
+                .build();
     }
 
     private Task saveSingleTask(){

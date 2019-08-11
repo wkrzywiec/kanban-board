@@ -3,7 +3,6 @@ package com.wkrzywiec.medium.kanban.model;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 

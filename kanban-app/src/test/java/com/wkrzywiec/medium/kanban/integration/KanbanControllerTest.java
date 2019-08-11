@@ -191,22 +191,21 @@ public class KanbanControllerTest {
         return kanbanRepository.save(kanban);
     }
 
-    private Task createSingleTask() {
+    private Task createSingleTask(){
         Task task = new Task();
         int random = (int)(Math.random() * 100 + 1);
-        task.setTitle("Title " + random);
+        task.setTitle("Test Task " + random);
         task.setDescription("Description " + random);
         task.setColor("Color " + random);
         return task;
     }
-
     private Kanban findKanbanInDbByTitle(String title) {
         return kanbanRepository.findByTitle(title).get();
     }
 
     private KanbanDTO convertKanbanToDTO(Kanban kanban) {
-        KanbanDTO kanbanDTO = new KanbanDTO();
-        kanbanDTO.setTitle(kanban.getTitle());
-        return kanbanDTO;
+        return new KanbanDTO().builder()
+                                .title(kanban.getTitle())
+                                .build();
     }
 }

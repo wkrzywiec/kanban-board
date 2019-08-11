@@ -158,10 +158,10 @@ public class TaskControllerTest {
 
     private TaskDTO convertTaskToDTO(Task task) {
         return new TaskDTO().builder()
-                .title(task.getTitle())
-                .description(task.getDescription())
-                .color(task.getColor())
-                .build();
+                            .title(task.getTitle())
+                            .description(task.getDescription())
+                            .color(task.getColor())
+                            .build();
     }
 
     private Task saveSingleTask(){

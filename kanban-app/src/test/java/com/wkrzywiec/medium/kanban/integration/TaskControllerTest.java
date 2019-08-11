@@ -97,6 +97,25 @@ public class TaskControllerTest {
         assertEquals(task.toString(), taskRepository.findById(response.getBody().getId()).get().toString());
     }
 
+    @Test
+    public void whenPutSingleTask_thenItIsUpdated(){
+
+        //given
+        Task task = saveSingleTask();
+        task.setTitle(task.getTitle() + " Updated");
+
+        //when
+        ResponseEntity<Task> response = this.restTemplate.exchange(
+                baseURL + "tasks/" + task.getId(),
+                HttpMethod.PUT,
+                new HttpEntity<>(convertTaskToDTO(task), new HttpHeaders()),
+                Task.class);
+
+        //then
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(task.getTitle(), taskRepository.findById(response.getBody().getId()).get().getTitle());
+    }
+
     private Task createSingleTask(){
         Task task = new Task();
         int random = (int)(Math.random() * 100 + 1);

@@ -47,7 +47,7 @@ public class KanbanControllerTest {
     public void whenGetAllKanbans_thenReceiveSingleKanban(){
 
         //given
-        Kanban kanban = saveSingleKanban();
+        saveSingleRandomKanban();
 
         //when
         ResponseEntity<List<Kanban>> response = this.restTemplate.exchange(
@@ -65,7 +65,7 @@ public class KanbanControllerTest {
     public void whenGetSingleKanbanById_thenReceiveSingleKanban(){
 
         //given
-        Kanban kanban = saveSingleKanban();
+        Kanban kanban = saveSingleRandomKanban();
 
         //when
         ResponseEntity<Kanban> response = this.restTemplate.exchange(
@@ -95,14 +95,17 @@ public class KanbanControllerTest {
 
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(kanban.getTasks().get(0), response.getBody().get(0));
+        assertEquals(kanban.getTasks().get(0).getId(), response.getBody().get(0).getId());
+        assertEquals(kanban.getTasks().get(0).getTitle(), response.getBody().get(0).getTitle());
+        assertEquals(kanban.getTasks().get(0).getDescription(), response.getBody().get(0).getDescription());
+        assertEquals(kanban.getTasks().get(0).getColor(), response.getBody().get(0).getColor());
     }
 
     @Test
     public void whenGetSingleKanbanByTitle_thenReceiveSingleKanban(){
 
         //given
-        Kanban kanban = saveSingleKanban();
+        Kanban kanban = saveSingleRandomKanban();
 
         //when
         ResponseEntity<Kanban> response = this.restTemplate.exchange(
@@ -147,7 +150,7 @@ public class KanbanControllerTest {
     public void whenPutSingleKanban_thenItIsUpdated(){
 
         //given
-        Kanban kanban = saveSingleKanban();
+        Kanban kanban = saveSingleRandomKanban();
         kanban.setTitle(kanban.getTitle() + " Updated");
 
         //when
@@ -166,7 +169,7 @@ public class KanbanControllerTest {
     public void whenDeleteSingleKanbanById_thenItIsDeletedFromDb(){
 
         //given
-        Kanban kanban = saveSingleKanban();
+        Kanban kanban = saveSingleRandomKanban();
 
         //when
         ResponseEntity<String> response = this.restTemplate.exchange(
@@ -189,15 +192,14 @@ public class KanbanControllerTest {
         return kanban;
     }
 
-    private Kanban saveSingleKanban(){
+    private Kanban saveSingleRandomKanban(){
         return kanbanRepository.save(createSingleKanban());
     }
 
     private Kanban saveSingleKanbanWithOneTask(){
-        Kanban kanban = saveSingleKanban();
-        List<Task> taskList = new ArrayList<>();
-        taskList.add(createSingleTask());
-        kanban.setTasks(taskList);
+        Kanban kanban = createSingleKanban();
+        Task task = createSingleTask();
+        kanban.addTask(task);
         return kanbanRepository.save(kanban);
     }
 

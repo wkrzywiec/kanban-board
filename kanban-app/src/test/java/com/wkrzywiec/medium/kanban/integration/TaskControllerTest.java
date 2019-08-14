@@ -1,7 +1,9 @@
 package com.wkrzywiec.medium.kanban.integration;
 
+import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.model.Task;
 import com.wkrzywiec.medium.kanban.model.TaskDTO;
+import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import com.wkrzywiec.medium.kanban.repository.TaskRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +17,7 @@ import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -35,6 +38,9 @@ public class TaskControllerTest {
 
     @Autowired
     private TaskRepository taskRepository;
+
+    @Autowired
+    private KanbanRepository kanbanRepository;
 
     @Before
     public void setUp(){
@@ -110,6 +116,38 @@ public class TaskControllerTest {
     }
 
     @Test
+    public void whenPostSingleTaskWithKanbanAssignment_thenItIsStoredInDb(){
+
+        //given
+        Task task = createSingleTask();
+        saveSingleRandomKanban();
+
+        //when
+        ResponseEntity<Task> response = this.restTemplate.exchange(
+                baseURL + "tasks/",
+                HttpMethod.POST,
+                new HttpEntity<>(convertTaskToDTO(task), new HttpHeaders()),
+                Task.class);
+
+        //then
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+
+        // check response Task
+        Task responseTask = response.getBody();
+        assertNotNull(responseTask.getId());
+        assertEquals(task.getTitle(), responseTask.getTitle());
+        assertEquals(task.getDescription(), responseTask.getDescription());
+        assertEquals(task.getColor(), responseTask.getColor());
+
+        // check saved Task in db
+        Task savedTask = taskRepository.findById(responseTask.getId()).get();
+        assertEquals(responseTask.getId(), savedTask.getId());
+        assertEquals(task.getTitle(), savedTask.getTitle());
+        assertEquals(task.getDescription(), savedTask.getDescription());
+        assertEquals(task.getColor(), savedTask.getColor());
+    }
+
+    @Test
     public void whenPutSingleTask_thenItIsUpdated(){
 
         //given
@@ -166,5 +204,17 @@ public class TaskControllerTest {
 
     private Task saveSingleTask(){
         return taskRepository.save(createSingleTask());
+    }
+
+    private Kanban createSingleKanban(){
+        Kanban kanban = new Kanban();
+        int random = (int)(Math.random() * 100 + 1);
+        kanban.setTitle("Test Kanban " + random);
+        kanban.setTasks(new ArrayList<>());
+        return kanban;
+    }
+
+    private Kanban saveSingleRandomKanban(){
+        return kanbanRepository.save(createSingleKanban());
     }
 }

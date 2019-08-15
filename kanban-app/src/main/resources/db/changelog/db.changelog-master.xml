@@ -33,5 +33,14 @@
         <comment>Add kanban_id column to task table</comment>
     </changeSet>
 
+    <changeSet id="4" author="Wojtek">
+        <sqlFile path="04_task_status.sql"
+                 relativeToChangelogFile="true"
+                 splitStatements="true"
+                 stripComments="true"/>
+
+        <comment>Add status column to task table</comment>
+    </changeSet>
+
 </databaseChangeLog>
 

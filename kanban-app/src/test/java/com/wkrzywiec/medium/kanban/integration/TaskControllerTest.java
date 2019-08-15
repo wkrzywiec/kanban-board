@@ -3,6 +3,7 @@ package com.wkrzywiec.medium.kanban.integration;
 import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.model.Task;
 import com.wkrzywiec.medium.kanban.model.TaskDTO;
+import com.wkrzywiec.medium.kanban.model.TaskStatus;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import com.wkrzywiec.medium.kanban.repository.TaskRepository;
 import org.junit.Before;
@@ -105,6 +106,7 @@ public class TaskControllerTest {
         assertEquals(task.getTitle(), responseTask.getTitle());
         assertEquals(task.getDescription(), responseTask.getDescription());
         assertEquals(task.getColor(), responseTask.getColor());
+        assertEquals(task.getStatus(), responseTask.getStatus());
 
             // check saved Task in db
         Task savedTask = taskRepository.findById(responseTask.getId()).get();
@@ -112,7 +114,7 @@ public class TaskControllerTest {
         assertEquals(task.getTitle(), savedTask.getTitle());
         assertEquals(task.getDescription(), savedTask.getDescription());
         assertEquals(task.getColor(), savedTask.getColor());
-
+        assertEquals(task.getStatus(), savedTask.getStatus());
     }
 
     @Test
@@ -138,6 +140,7 @@ public class TaskControllerTest {
         assertEquals(task.getTitle(), responseTask.getTitle());
         assertEquals(task.getDescription(), responseTask.getDescription());
         assertEquals(task.getColor(), responseTask.getColor());
+        assertEquals(task.getStatus(), responseTask.getStatus());
 
         // check saved Task in db
         Task savedTask = taskRepository.findById(responseTask.getId()).get();
@@ -145,6 +148,7 @@ public class TaskControllerTest {
         assertEquals(task.getTitle(), savedTask.getTitle());
         assertEquals(task.getDescription(), savedTask.getDescription());
         assertEquals(task.getColor(), savedTask.getColor());
+        assertEquals(task.getStatus(), savedTask.getStatus());
     }
 
     @Test
@@ -191,6 +195,7 @@ public class TaskControllerTest {
         task.setTitle("Test Task " + random);
         task.setDescription("Description " + random);
         task.setColor("Color " + random);
+        task.setStatus(TaskStatus.TODO);
         return task;
     }
 
@@ -199,6 +204,7 @@ public class TaskControllerTest {
                             .title(task.getTitle())
                             .description(task.getDescription())
                             .color(task.getColor())
+                            .status(task.getStatus())
                             .build();
     }
 

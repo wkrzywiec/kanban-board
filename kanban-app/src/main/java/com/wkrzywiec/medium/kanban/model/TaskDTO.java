@@ -20,4 +20,7 @@ public class TaskDTO {
 
     @ApiModelProperty(position = 3)
     private String color;
+
+    @ApiModelProperty(position = 4)
+    private TaskStatus status;
 }

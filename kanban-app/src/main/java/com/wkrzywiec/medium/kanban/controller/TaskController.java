@@ -55,6 +55,7 @@ public class TaskController {
             task.setTitle(taskDTO.getTitle());
             task.setDescription(taskDTO.getDescription());
             task.setColor(taskDTO.getColor());
+            task.setStatus(taskDTO.getStatus());
             return new ResponseEntity<>(taskRepository.save(task), HttpStatus.CREATED);
         } catch (Exception e) {
             return errorResponse();

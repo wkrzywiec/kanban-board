@@ -35,4 +35,7 @@ public class Task {
     @ApiModelProperty(position = 4)
     private String color;
 
+    @Enumerated(EnumType.STRING)
+    @ApiModelProperty(position = 5)
+    private TaskStatus status;
 }

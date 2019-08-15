@@ -3,6 +3,7 @@ package com.wkrzywiec.medium.kanban.integration;
 import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.model.KanbanDTO;
 import com.wkrzywiec.medium.kanban.model.Task;
+import com.wkrzywiec.medium.kanban.model.TaskStatus;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -209,6 +210,7 @@ public class KanbanControllerTest {
         task.setTitle("Test Task " + random);
         task.setDescription("Description " + random);
         task.setColor("Color " + random);
+        task.setStatus(TaskStatus.TODO);
         return task;
     }
 

@@ -20,7 +20,6 @@ public class KanbanController {
 
     private final KanbanService kanbanService;
 
-
     @GetMapping("/")
     @ApiOperation(value="View a list of all Kanban boards", response = Kanban.class, responseContainer = "List")
     public ResponseEntity<?> getAllKanbans(){

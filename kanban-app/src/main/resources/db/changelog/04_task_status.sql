@@ -1,0 +1,2 @@
+ALTER TABLE task
+ADD COLUMN status VARCHAR(20);

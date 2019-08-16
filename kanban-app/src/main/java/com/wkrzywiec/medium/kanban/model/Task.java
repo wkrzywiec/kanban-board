@@ -1,5 +1,7 @@
 package com.wkrzywiec.medium.kanban.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +12,9 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @Table(name = "task")
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 public class Task {
 
     @Id
@@ -29,4 +34,8 @@ public class Task {
     @Column(name = "color")
     @ApiModelProperty(position = 4)
     private String color;
+
+    @Enumerated(EnumType.STRING)
+    @ApiModelProperty(position = 5)
+    private TaskStatus status;
 }

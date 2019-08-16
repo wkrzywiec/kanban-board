@@ -3,7 +3,9 @@ package com.wkrzywiec.medium.kanban.controller;
 import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.model.KanbanDTO;
 import com.wkrzywiec.medium.kanban.model.Task;
+import com.wkrzywiec.medium.kanban.model.TaskDTO;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
+import com.wkrzywiec.medium.kanban.repository.TaskRepository;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,6 +22,8 @@ import java.util.Optional;
 public class KanbanController {
 
     private final KanbanRepository kanbanRepository;
+
+    private final TaskRepository taskRepository;
 
     @GetMapping("/")
     @ApiOperation(value="View a list of all Kanban boards", response = Kanban.class, responseContainer = "List")
@@ -42,6 +46,21 @@ public class KanbanController {
                 return new ResponseEntity<>(optKanban.get(), HttpStatus.OK);
             } else {
                 return noKanbanFoundResponse(id);
+            }
+        } catch (Exception e) {
+            return errorResponse();
+        }
+    }
+
+    @GetMapping("")
+    @ApiOperation(value="Find a Kanban board info by its title", response = Kanban.class)
+    public ResponseEntity<?> getKanbanByTitle(@RequestParam String title){
+        try {
+            Optional<Kanban> optKanban = kanbanRepository.findByTitle(title);
+            if (optKanban.isPresent()) {
+                return new ResponseEntity<>(optKanban.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("No kanban found with a title: " + title, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
             return errorResponse();
@@ -108,16 +127,20 @@ public class KanbanController {
         }
     }
 
-    @GetMapping("")
-    @ApiOperation(value="Find a Kanban board info by its title", response = Kanban.class)
-    public ResponseEntity<?> getKanbanByTitle(@RequestParam String title){
+    @PostMapping("/{kanbanId}/tasks/")
+    @ApiOperation(value="Save new Task and assign it to Kanban board", response = Kanban.class)
+    public ResponseEntity<?> createTaskAssignedToKanban(@PathVariable Long kanbanId, @RequestBody TaskDTO taskDTO){
         try {
-            Optional<Kanban> optKanban = kanbanRepository.findByTitle(title);
-            if (optKanban.isPresent()) {
-                return new ResponseEntity<>(optKanban.get(), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("No kanban found with a title: " + title, HttpStatus.NOT_FOUND);
-            }
+            Task task = new Task();
+            task.setTitle(taskDTO.getTitle());
+            task.setDescription(taskDTO.getDescription());
+            task.setColor(taskDTO.getColor());
+            task.setStatus(taskDTO.getStatus());
+
+            Kanban kanban = kanbanRepository.findById(kanbanId).get();
+            kanban.addTask(task);
+
+            return new ResponseEntity<>(kanbanRepository.save(kanban), HttpStatus.CREATED);
         } catch (Exception e) {
             return errorResponse();
         }

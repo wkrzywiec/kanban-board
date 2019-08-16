@@ -141,6 +141,47 @@ public class KanbanControllerTest extends CommonTest {
     }
 
     @Test
+    public void whenPostSingleTaskToAlreadyCreatedKanban_thenItIsStoredInDbAndAssignedToKanban(){
+
+        //given
+        Kanban kanban = saveSingleRandomKanban();
+        Task task = createSingleTask();
+
+        //when
+        ResponseEntity<Kanban> response = this.restTemplate.exchange(
+                baseURL + "kanbans/" + kanban.getId() + "/tasks/",
+                HttpMethod.POST,
+                new HttpEntity<>(convertTaskToDTO(task), new HttpHeaders()),
+                Kanban.class);
+
+        //then
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+
+        // check response Kanban
+        Kanban responseKanban = response.getBody();
+        assertNotNull(responseKanban.getId());
+        assertEquals(kanban.getTitle(), responseKanban.getTitle());
+        assertTrue(responseKanban.getTasks().size() == 1);
+
+        Task responseTask = responseKanban.getTasks().get(0);
+        // check response Task
+        assertNotNull(responseTask.getId());
+        assertEquals(task.getTitle(), responseTask.getTitle());
+        assertEquals(task.getDescription(), responseTask.getDescription());
+        assertEquals(task.getColor(), responseTask.getColor());
+        assertEquals(task.getStatus(), responseTask.getStatus());
+
+        // check saved Task in db
+        Task savedTask = findTaskInDbById(responseTask.getId()).get();
+        assertEquals(responseTask.getId(), savedTask.getId());
+        assertEquals(task.getTitle(), savedTask.getTitle());
+        assertEquals(task.getDescription(), savedTask.getDescription());
+        assertEquals(task.getColor(), savedTask.getColor());
+        assertEquals(task.getStatus(), savedTask.getStatus());
+    }
+
+
+    @Test
     public void whenPutSingleKanban_thenItIsUpdated(){
 
         //given

@@ -1,11 +1,7 @@
 package com.wkrzywiec.medium.kanban.integration;
 
-import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.model.Task;
-import com.wkrzywiec.medium.kanban.model.TaskDTO;
-import com.wkrzywiec.medium.kanban.model.TaskStatus;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
-import com.wkrzywiec.medium.kanban.repository.TaskRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,19 +11,15 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@TestPropertySource(
-        locations = "classpath:application-integrationtest.properties")
-public class TaskControllerTest {
+public class TaskControllerTest extends CommonTest {
 
     private String baseURL;
 
@@ -36,9 +28,6 @@ public class TaskControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
-    @Autowired
-    private TaskRepository taskRepository;
 
     @Autowired
     private KanbanRepository kanbanRepository;
@@ -109,7 +98,7 @@ public class TaskControllerTest {
         assertEquals(task.getStatus(), responseTask.getStatus());
 
             // check saved Task in db
-        Task savedTask = taskRepository.findById(responseTask.getId()).get();
+        Task savedTask = findTaskInDbById(responseTask.getId()).get();
         assertEquals(responseTask.getId(), savedTask.getId());
         assertEquals(task.getTitle(), savedTask.getTitle());
         assertEquals(task.getDescription(), savedTask.getDescription());
@@ -143,13 +132,15 @@ public class TaskControllerTest {
         assertEquals(task.getStatus(), responseTask.getStatus());
 
         // check saved Task in db
-        Task savedTask = taskRepository.findById(responseTask.getId()).get();
+        Task savedTask = findTaskInDbById(responseTask.getId()).get();
         assertEquals(responseTask.getId(), savedTask.getId());
         assertEquals(task.getTitle(), savedTask.getTitle());
         assertEquals(task.getDescription(), savedTask.getDescription());
         assertEquals(task.getColor(), savedTask.getColor());
         assertEquals(task.getStatus(), savedTask.getStatus());
     }
+
+
 
     @Test
     public void whenPutSingleTask_thenItIsUpdated(){
@@ -167,7 +158,7 @@ public class TaskControllerTest {
 
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(task.getTitle(), taskRepository.findById(task.getId()).get().getTitle());
+        assertEquals(task.getTitle(), findTaskInDbById(task.getId()).get().getTitle());
     }
 
     @Test
@@ -186,41 +177,6 @@ public class TaskControllerTest {
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(String.format("Task with id: %d was deleted", task.getId()), response.getBody());
-        assertFalse(taskRepository.findById(task.getId()).isPresent());
-    }
-
-    private Task createSingleTask(){
-        Task task = new Task();
-        int random = (int)(Math.random() * 100 + 1);
-        task.setTitle("Test Task " + random);
-        task.setDescription("Description " + random);
-        task.setColor("Color " + random);
-        task.setStatus(TaskStatus.TODO);
-        return task;
-    }
-
-    private TaskDTO convertTaskToDTO(Task task) {
-        return new TaskDTO().builder()
-                            .title(task.getTitle())
-                            .description(task.getDescription())
-                            .color(task.getColor())
-                            .status(task.getStatus())
-                            .build();
-    }
-
-    private Task saveSingleTask(){
-        return taskRepository.save(createSingleTask());
-    }
-
-    private Kanban createSingleKanban(){
-        Kanban kanban = new Kanban();
-        int random = (int)(Math.random() * 100 + 1);
-        kanban.setTitle("Test Kanban " + random);
-        kanban.setTasks(new ArrayList<>());
-        return kanban;
-    }
-
-    private Kanban saveSingleRandomKanban(){
-        return kanbanRepository.save(createSingleKanban());
+        assertFalse(findTaskInDbById(task.getId()).isPresent());
     }
 }

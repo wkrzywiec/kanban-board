@@ -1,10 +1,7 @@
 package com.wkrzywiec.medium.kanban.integration;
 
 import com.wkrzywiec.medium.kanban.model.Kanban;
-import com.wkrzywiec.medium.kanban.model.KanbanDTO;
 import com.wkrzywiec.medium.kanban.model.Task;
-import com.wkrzywiec.medium.kanban.model.TaskStatus;
-import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +14,6 @@ import org.springframework.http.*;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -26,7 +22,7 @@ import static org.junit.Assert.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestPropertySource(
         locations = "classpath:application-integrationtest.properties")
-public class KanbanControllerTest {
+public class KanbanControllerTest extends CommonTest {
 
     private String baseURL;
 
@@ -35,9 +31,6 @@ public class KanbanControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
-    @Autowired
-    private KanbanRepository kanbanRepository;
 
     @Before
     public void setUp(){
@@ -143,7 +136,7 @@ public class KanbanControllerTest {
         assertEquals(kanban.getTitle(), responseKanban.getTitle());
 
             // check Kanban saved in db
-        Kanban savedKanban = kanbanRepository.findById(responseKanban.getId()).get();
+        Kanban savedKanban = findKanbanInDbById(responseKanban.getId()).get();
         assertEquals(kanban.getTitle(), savedKanban.getTitle());
     }
 
@@ -163,7 +156,7 @@ public class KanbanControllerTest {
 
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertEquals(kanban.getTitle(), kanbanRepository.findById(kanban.getId()).get().getTitle());
+        assertEquals(kanban.getTitle(), findKanbanInDbById(kanban.getId()).get().getTitle());
     }
 
     @Test
@@ -182,41 +175,7 @@ public class KanbanControllerTest {
         //then
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(String.format("Kanban with id: %d was deleted", kanban.getId()), response.getBody());
-        assertFalse(kanbanRepository.findById(kanban.getId()).isPresent());
+        assertFalse(findKanbanInDbById(kanban.getId()).isPresent());
     }
 
-    private Kanban createSingleKanban(){
-        Kanban kanban = new Kanban();
-        int random = (int)(Math.random() * 100 + 1);
-        kanban.setTitle("Test Kanban " + random);
-        kanban.setTasks(new ArrayList<>());
-        return kanban;
-    }
-
-    private Kanban saveSingleRandomKanban(){
-        return kanbanRepository.save(createSingleKanban());
-    }
-
-    private Kanban saveSingleKanbanWithOneTask(){
-        Kanban kanban = createSingleKanban();
-        Task task = createSingleTask();
-        kanban.addTask(task);
-        return kanbanRepository.save(kanban);
-    }
-
-    private Task createSingleTask(){
-        Task task = new Task();
-        int random = (int)(Math.random() * 100 + 1);
-        task.setTitle("Test Task " + random);
-        task.setDescription("Description " + random);
-        task.setColor("Color " + random);
-        task.setStatus(TaskStatus.TODO);
-        return task;
-    }
-
-    private KanbanDTO convertKanbanToDTO(Kanban kanban) {
-        return new KanbanDTO().builder()
-                                .title(kanban.getTitle())
-                                .build();
-    }
 }

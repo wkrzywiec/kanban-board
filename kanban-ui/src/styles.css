@@ -4,4 +4,14 @@ html {
     background-color: #daba9e;
 }
 
+.page-container {
+    margin: 50px 200px 200px 200px;
+}
+
+.page-title {
+    font-weight: bold;
+    font-family: 'Andika', sans-serif;
+    text-transform: uppercase;
+}
+
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { KanbanService } from '../service/kanban-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { Kanban } from '../model/kanban/kanban';
+import { Task } from '../model/task/task';
 
 @Component({
   selector: 'app-kanban',
@@ -10,7 +11,12 @@ import { Kanban } from '../model/kanban/kanban';
 })
 export class KanbanComponent implements OnInit {
 
+//https://material.angular.io/cdk/drag-drop/overview
+
   kanban: Kanban;
+  todos: Task[];
+  inprogress: Task[];
+  dones: Task[];
 
   constructor(
     private kanbanService: KanbanService,
@@ -27,8 +33,19 @@ export class KanbanComponent implements OnInit {
 
       response => {
         this.kanban = response;
+        this.splitTasksByStatus(response);
       }
     )
+  }
+
+  private splitTasksByStatus(kanban: Kanban): void {
+    this.todos = kanban.tasks.filter(t=>t.status==='TODO');
+    this.inprogress = kanban.tasks.filter(t=>t.status==='INPROGRESS');
+    this.dones = kanban.tasks.filter(t=>t.status==='DONE');
+
+    console.log(this.todos);
+    console.log(this.inprogress);
+    console.log(this.dones);
   }
 
 }

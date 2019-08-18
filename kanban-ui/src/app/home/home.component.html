@@ -5,7 +5,7 @@
   
   <div class="main-card">
     <mat-nav-list>
-      <a mat-list-item *ngFor="let kanban of kanbanList" href="/kanbans/{{kanban.id}}"> 
+      <a mat-list-item *ngFor="let kanban of kanbanList" routerLink="/kanbans/{{kanban.id}}"> 
         <p class="kanban-title">{{kanban.title}}</p>
       </a>
     </mat-nav-list>

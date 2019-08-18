@@ -2,4 +2,44 @@
   <div class="page-title">
     <h1>{{kanban?.title}}</h1>
   </div>
+  <div class="kanban-board">
+    <div class="example-container">
+        <h2>To do</h2>
+      <div
+        cdkDropList
+        #todosList="cdkDropList"
+        [cdkDropListData]="todos"
+        [cdkDropListConnectedTo]="[inProgressList, doneList]"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let task of todos" cdkDrag>{{task.title}}</div>
+      </div>
+    </div>
+
+    <div class="example-container">
+        <h2>In Progress</h2>
+      <div
+        cdkDropList
+        #inProgressList="cdkDropList"
+        [cdkDropListData]="inProgress"
+        [cdkDropListConnectedTo]="[todoList, doneList]"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let task of inprogress" cdkDrag>{{task.title}}</div>
+      </div>
+    </div>
+    
+    <div class="example-container">
+        <h2>Done</h2>
+        <div
+        cdkDropList
+        #donesList="cdkDropList"
+        [cdkDropListData]="dones"
+        [cdkDropListConnectedTo]="[todoList, inProgressList]"
+        class="example-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="example-box" *ngFor="let task of dones" cdkDrag>{{task.title}}</div>
+        </div>
+    </div>
+  </div>
 </div>

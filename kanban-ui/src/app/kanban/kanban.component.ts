@@ -3,6 +3,7 @@ import { KanbanService } from '../service/kanban-service.service';
 import { ActivatedRoute } from '@angular/router';
 import { Kanban } from '../model/kanban/kanban';
 import { Task } from '../model/task/task';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-kanban',
@@ -27,6 +28,17 @@ export class KanbanComponent implements OnInit {
     this.getKanban();
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+                        event.currentIndex);
+    }
+  }
+
   private getKanban(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.kanbanService.retrieveKanbanById(id).subscribe(
@@ -47,5 +59,6 @@ export class KanbanComponent implements OnInit {
     console.log(this.inprogress);
     console.log(this.dones);
   }
+  
 
 }

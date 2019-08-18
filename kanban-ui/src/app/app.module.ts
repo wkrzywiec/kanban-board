@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 import { KanbanComponent } from './kanban/kanban.component';
 
 @NgModule({
@@ -20,7 +21,8 @@ import { KanbanComponent } from './kanban/kanban.component';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatListModule
+    MatListModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]

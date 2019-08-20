@@ -15,9 +15,9 @@ export class KanbanComponent implements OnInit {
 //https://material.angular.io/cdk/drag-drop/overview
 
   kanban: Kanban;
-  todos: Task[];
-  inprogress: Task[];
-  dones: Task[];
+  todos: Task[] = [];
+  inprogress: Task[] = [];
+  dones: Task[] = [];
 
   constructor(
     private kanbanService: KanbanService,
@@ -30,8 +30,13 @@ export class KanbanComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>) {
     if (event.previousContainer === event.container) {
+      console.log('Event containers: ' + event.container);
+      console.log(event);
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      console.log('Event previous containers: ' + event.previousContainer);
+      console.log('Event new containers: ' + event.container);
+      console.log(event);
       transferArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
@@ -54,10 +59,6 @@ export class KanbanComponent implements OnInit {
     this.todos = kanban.tasks.filter(t=>t.status==='TODO');
     this.inprogress = kanban.tasks.filter(t=>t.status==='INPROGRESS');
     this.dones = kanban.tasks.filter(t=>t.status==='DONE');
-
-    console.log(this.todos);
-    console.log(this.inprogress);
-    console.log(this.dones);
   }
   
 

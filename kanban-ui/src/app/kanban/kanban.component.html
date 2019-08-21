@@ -3,42 +3,42 @@
     <h1>{{kanban?.title}}</h1>
   </div>
   <div class="kanban-board">
-    <div class="example-container">
+    <div class="list-container">
         <h2>To do</h2>
       <div
         cdkDropList
         id="todo"
         [cdkDropListData]="todos"
         [cdkDropListConnectedTo]="['inpro', 'done']"
-        class="example-list"
+        class="board-list"
         (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let task of todos" cdkDrag>{{task.title}}</div>
+        <div class="sticky-note" *ngFor="let task of todos" cdkDrag>{{task.title}}</div>
       </div>
     </div>
 
-    <div class="example-container">
+    <div class="list-container">
       <h2>In Progress</h2>
       <div
       cdkDropList
       id="inpro"
       [cdkDropListData]="inprogress"
       [cdkDropListConnectedTo]="['todo', 'done']"
-      class="example-list"
+      class="board-list"
       (cdkDropListDropped)="drop($event)">
-        <div class="example-box" *ngFor="let task of inprogress" cdkDrag>{{task.title}}</div>
+        <div class="sticky-note" *ngFor="let task of inprogress" cdkDrag>{{task.title}}</div>
       </div>
   </div>
 
-    <div class="example-container">
+    <div class="list-container">
         <h2>Done</h2>
         <div
         cdkDropList
         id="done"
         [cdkDropListData]="dones"
         [cdkDropListConnectedTo]="['todo', 'inpro']"
-        class="example-list"
+        class="board-list"
         (cdkDropListDropped)="drop($event)">
-          <div class="example-box" *ngFor="let task of dones" cdkDrag>{{task.title}}</div>
+          <div class="sticky-note" *ngFor="let task of dones" cdkDrag>{{task.title}}</div>
         </div>
     </div>
   </div>

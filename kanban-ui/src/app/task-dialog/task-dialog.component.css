@@ -1,0 +1,9 @@
+.dialog-content {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.description-area {
+    height: 200px;
+}

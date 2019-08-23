@@ -1,4 +1,8 @@
-<h2 mat-dialog-title>{{ dialogTitle }}</h2>
+<div class="dialog-title">
+  <h1 mat-dialog-title>{{ dialogTitle }}</h1> 
+  <div class="task-status">{{task.status}}</div>
+</div>
+
 
 <mat-dialog-content [formGroup]="form" class="dialog-content">
 
@@ -8,8 +12,6 @@
              formControlName="title">
   </mat-form-field>
 
-  {{task.status}}
-  
   <mat-form-field>
       <mat-select placeholder="Select color"
           formControlName="color">

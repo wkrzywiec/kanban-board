@@ -49,7 +49,8 @@ export class KanbanComponent implements OnInit {
 
     dialogConfig.data = {
       title: 'Create New Task',
-      task: new Task()
+      task: new Task(),
+      kanbanId: this.kanban.id
   };
 
     this.dialog.open(TaskDialogComponent, dialogConfig)

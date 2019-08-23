@@ -2,6 +2,9 @@
   <div class="page-title">
     <h1>{{kanban?.title}}</h1>
   </div>
+  <div>
+    <button mat-raised-button (click)="openDialog()">+ Create Task</button>
+  </div>
   <div class="kanban-board">
     <div class="list-container">
         <h2>To do</h2>

@@ -4,17 +4,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatListModule } from '@angular/material/list';
-import {DragDropModule} from '@angular/cdk/drag-drop';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from "@angular/material";
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
+import { HomeComponent } from './home/home.component';
 import { KanbanComponent } from './kanban/kanban.component';
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    KanbanComponent
+    KanbanComponent,
+    TaskDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -22,9 +27,12 @@ import { KanbanComponent } from './kanban/kanban.component';
     HttpClientModule,
     BrowserAnimationsModule,
     MatListModule,
-    DragDropModule
+    DragDropModule,
+    MatButtonModule,
+    MatDialogModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [TaskDialogComponent]
 })
 export class AppModule { }

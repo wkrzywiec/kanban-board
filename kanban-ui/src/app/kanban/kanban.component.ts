@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Kanban } from '../model/kanban/kanban';
 import { Task } from '../model/task/task';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 
 @Component({
   selector: 'app-kanban',
@@ -12,6 +14,8 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 })
 export class KanbanComponent implements OnInit {
   
+//https://blog.angular-university.io/angular-material-dialog/
+
   kanban: Kanban;
   todos: Task[] = [];
   inprogress: Task[] = [];
@@ -19,7 +23,8 @@ export class KanbanComponent implements OnInit {
 
   constructor(
     private kanbanService: KanbanService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -35,6 +40,18 @@ export class KanbanComponent implements OnInit {
                         event.previousIndex,
                         event.currentIndex);
     }
+  }
+
+  openDialog() {
+    
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      title: 'Create New Task'
+  };
+
+    this.dialog.open(TaskDialogComponent, dialogConfig)
   }
 
   private getKanban(): void {

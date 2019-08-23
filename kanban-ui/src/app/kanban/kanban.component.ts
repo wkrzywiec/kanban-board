@@ -15,6 +15,7 @@ import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 export class KanbanComponent implements OnInit {
   
 //https://blog.angular-university.io/angular-material-dialog/
+//https://code-maze.com/angular-material-form-validation/
 
   kanban: Kanban;
   todos: Task[] = [];
@@ -42,13 +43,13 @@ export class KanbanComponent implements OnInit {
     }
   }
 
-  openDialog() {
-    
+  openDialogForNewTask() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
 
     dialogConfig.data = {
-      title: 'Create New Task'
+      title: 'Create New Task',
+      task: new Task()
   };
 
     this.dialog.open(TaskDialogComponent, dialogConfig)

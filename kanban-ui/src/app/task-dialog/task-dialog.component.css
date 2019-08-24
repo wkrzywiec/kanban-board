@@ -3,14 +3,8 @@
     flex-direction: column;
 }
 
-h1 {
-    margin-bottom: 5px;
-}
-
-.task-status {
-    margin-bottom: 15px;
-    font-style: italic;
-    font-size: 80%;
+.task-title {
+    font-size: 150%;
 }
 
 .dialog-content {

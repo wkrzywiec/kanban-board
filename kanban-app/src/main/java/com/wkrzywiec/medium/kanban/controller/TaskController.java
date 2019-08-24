@@ -48,6 +48,23 @@ public class TaskController {
         }
     }
 
+    @GetMapping("")
+    @ApiOperation(value="Find a task info by its title", response = Task.class)
+    public ResponseEntity<?> getTaskByTitle(@RequestParam String title){
+        try {
+            Optional<Task> optTask = taskService.getTaskByTitle(title);
+            if (optTask.isPresent()) {
+                return new ResponseEntity<>(
+                        optTask.get(),
+                        HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("No task found with a title: " + title, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return errorResponse();
+        }
+    }
+
     @PostMapping("/")
     @ApiOperation(value="Save new task", response = Task.class)
     public ResponseEntity<?> createTask(@RequestBody TaskDTO taskDTO){

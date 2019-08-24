@@ -12,6 +12,8 @@ public interface TaskService {
 
     Optional<Task> getTaskById(Long id);
 
+    Optional<Task> getTaskByTitle(String title);
+
     Task saveNewTask(TaskDTO taskDTO);
 
     Task updateTask(Task oldTask, TaskDTO newTaskDTO);

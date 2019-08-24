@@ -33,6 +33,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
+    public Optional<Task> getTaskByTitle(String title) {
+        return taskRepository.findByTitle(title);
+    }
+
+
+    @Override
+    @Transactional
     public Task saveNewTask(TaskDTO taskDTO) {
         return taskRepository.save(convertDTOToTask(taskDTO));
     }

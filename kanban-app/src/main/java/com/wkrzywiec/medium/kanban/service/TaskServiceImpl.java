@@ -77,6 +77,10 @@ public class TaskServiceImpl implements TaskService {
         if (Optional.ofNullable((taskDTO.getColor())).isPresent()) {
             task.setColor(taskDTO.getColor());
         }
+
+        if (Optional.ofNullable((taskDTO.getStatus())).isPresent()) {
+            task.setStatus(taskDTO.getStatus());
+        }
         return task;
     }
 }

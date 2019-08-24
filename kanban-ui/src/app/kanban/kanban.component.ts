@@ -6,6 +6,7 @@ import { Task } from '../model/task/task';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
+import { TaskService } from '../service/task.service';
 
 @Component({
   selector: 'app-kanban',
@@ -14,9 +15,6 @@ import { TaskDialogComponent } from '../task-dialog/task-dialog.component';
 })
 export class KanbanComponent implements OnInit {
   
-//https://blog.angular-university.io/angular-material-dialog/
-//https://code-maze.com/angular-material-form-validation/
-
   kanban: Kanban;
   todos: Task[] = [];
   inprogress: Task[] = [];
@@ -24,6 +22,7 @@ export class KanbanComponent implements OnInit {
 
   constructor(
     private kanbanService: KanbanService,
+    private taskService: TaskService,
     private route: ActivatedRoute,
     private dialog: MatDialog
   ) { }
@@ -36,6 +35,7 @@ export class KanbanComponent implements OnInit {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
+      this.updateTaskStatusAfterDragDrop(event);
       transferArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
@@ -73,5 +73,24 @@ export class KanbanComponent implements OnInit {
     this.dones = kanban.tasks.filter(t=>t.status==='DONE');
   }
   
+  private updateTaskStatusAfterDragDrop(event: CdkDragDrop<string[], string[]>) {
+    let taskTitle = event.item.element.nativeElement.innerText;
+    let containerId = event.container.id;
+    this.taskService.getTaskByTitle(taskTitle).subscribe(
+        response => {
+          this.updateTaskStatus(response, containerId);
+        }
+    );
+  }
 
+  private updateTaskStatus(task: Task, containerId: string): void {
+    if (containerId === 'todo'){
+      task.status = 'TODO'
+    } else if (containerId === 'inpro'){
+      task.status = 'INPROGRESS'
+    } else {
+      task.status = 'DONE'
+    }
+    this.taskService.updateTask(task).subscribe();
+  }
 }

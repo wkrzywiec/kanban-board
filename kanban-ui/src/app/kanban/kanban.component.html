@@ -15,8 +15,10 @@
         [cdkDropListConnectedTo]="['inpro', 'done']"
         class="board-list"
         (cdkDropListDropped)="drop($event)">
-        <div class="sticky-note" *ngFor="let task of todos" cdkDrag 
-         [style.background-color]="task.color">
+        <div class="sticky-note" *ngFor="let task of todos" cdkDrag
+         [style.background-color]="task.color"
+         (dblclick)="openTaskDialog($event)"
+         id="{{task.id}}">
           {{task.title}}
         </div>
       </div>
@@ -32,7 +34,9 @@
       class="board-list"
       (cdkDropListDropped)="drop($event)">
         <div class="sticky-note" *ngFor="let task of inprogress" cdkDrag
-        [style.background-color]="task.color">
+        [style.background-color]="task.color"
+        (dblclick)="openTaskDialog($event)"
+         id="{{task.id}}">
           {{task.title}}
         </div>
       </div>
@@ -48,7 +52,9 @@
         class="board-list"
         (cdkDropListDropped)="drop($event)">
           <div class="sticky-note" *ngFor="let task of dones" cdkDrag
-          [style.background-color]="task.color">
+          [style.background-color]="task.color"
+          (dblclick)="openTaskDialog($event)"
+          id="{{task.id}}">
             {{task.title}}
           </div>
         </div>

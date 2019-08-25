@@ -26,4 +26,8 @@ export class TaskService {
       .set('title', title);
     return this.http.get<Task>(this.kanbanAppUrl + '/tasks', {params});
   }
+
+  getTaskById(id: number): Observable<Task> {
+    return this.http.get<Task>(this.kanbanAppUrl + '/tasks/' + id);
+  }
 }

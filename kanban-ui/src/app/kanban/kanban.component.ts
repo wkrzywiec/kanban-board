@@ -43,7 +43,7 @@ export class KanbanComponent implements OnInit {
     }
   }
 
-  openDialogForNewTask() {
+  openDialogForNewTask(): void {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
 
@@ -54,6 +54,22 @@ export class KanbanComponent implements OnInit {
   };
 
     this.dialog.open(TaskDialogComponent, dialogConfig)
+  }
+
+  openTaskDialog(event): void {
+    let taskId = event.srcElement.id;
+    this.taskService.getTaskById(taskId).subscribe(
+
+      response => {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = {
+          title: 'Update Task',
+          task: response,
+          kanbanId: this.kanban.id
+        };
+        this.dialog.open(TaskDialogComponent, dialogConfig)
+      }
+    );
   }
 
   private getKanban(): void {

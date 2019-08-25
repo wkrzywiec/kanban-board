@@ -4,6 +4,7 @@ import { Task } from '../model/task/task';
 import { MatInputModule } from '@angular/material/input';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { KanbanService } from '../service/kanban-service.service';
+import { TaskService } from '../service/task.service';
 
 @Component({
   selector: 'app-task-dialog',
@@ -22,7 +23,8 @@ export class TaskDialogComponent implements OnInit {
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<TaskDialogComponent>,
     @Inject(MAT_DIALOG_DATA) data,
-    private kanbanService: KanbanService) {
+    private kanbanService: KanbanService,
+    private taskService: TaskService) {
 
     this.dialogTitle = data.title;
     this.kanbanId = data.kanbanId;
@@ -39,8 +41,12 @@ export class TaskDialogComponent implements OnInit {
   }
 
   save() {
-    this.mapFormToTaskModel()
-    this.kanbanService.saveNewTaskInKanban(this.kanbanId, this.task).subscribe();
+    this.mapFormToTaskModel();
+    if (!this.task.id) {
+      this.kanbanService.saveNewTaskInKanban(this.kanbanId, this.task).subscribe();
+    } else {
+      this.taskService.updateTask(this.task).subscribe();
+    }
     this.dialogRef.close();
   }
 

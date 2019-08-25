@@ -44,38 +44,23 @@ export class KanbanComponent implements OnInit {
   }
 
   openDialogForNewTask(): void {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.autoFocus = true;
-
-    dialogConfig.data = {
-      title: 'Create New Task',
-      task: new Task(),
-      kanbanId: this.kanban.id
-  };
-
-    this.dialog.open(TaskDialogComponent, dialogConfig)
+    this.openDialog('Create New Task', new Task());
   }
 
   openTaskDialog(event): void {
     let taskId = event.srcElement.id;
-    this.taskService.getTaskById(taskId).subscribe(
 
+    this.taskService.getTaskById(taskId).subscribe(
       response => {
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.data = {
-          title: 'Update Task',
-          task: response,
-          kanbanId: this.kanban.id
-        };
-        this.dialog.open(TaskDialogComponent, dialogConfig)
+        this.openDialog('Update Task', response);
       }
     );
   }
 
   private getKanban(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.kanbanService.retrieveKanbanById(id).subscribe(
 
+    this.kanbanService.retrieveKanbanById(id).subscribe(
       response => {
         this.kanban = response;
         this.splitTasksByStatus(response);
@@ -90,9 +75,10 @@ export class KanbanComponent implements OnInit {
   }
   
   private updateTaskStatusAfterDragDrop(event: CdkDragDrop<string[], string[]>) {
-    let taskTitle = event.item.element.nativeElement.innerText;
+    let taskId = event.item.element.nativeElement.id;
     let containerId = event.container.id;
-    this.taskService.getTaskByTitle(taskTitle).subscribe(
+
+    this.taskService.getTaskById(taskId).subscribe(
         response => {
           this.updateTaskStatus(response, containerId);
         }
@@ -108,5 +94,16 @@ export class KanbanComponent implements OnInit {
       task.status = 'DONE'
     }
     this.taskService.updateTask(task).subscribe();
+  }
+
+  private openDialog(title: string, task: Task): void {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      title: title,
+      task: task,
+      kanbanId: this.kanban.id
+    };
+    this.dialog.open(TaskDialogComponent, dialogConfig)
   }
 }

@@ -1,7 +1,14 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&display=swap');
 
 html {
-    background-color: #daba9e;
+    background-image: url(./assets/background.jpeg);
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+
+.app-container {
+    
 }
 
 .page-container {

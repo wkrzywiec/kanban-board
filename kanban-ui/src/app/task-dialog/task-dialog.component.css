@@ -1,0 +1,18 @@
+.dialog-title {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-title {
+    font-size: 150%;
+}
+
+.dialog-content {
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+}
+
+.description-area {
+    height: 200px;
+}

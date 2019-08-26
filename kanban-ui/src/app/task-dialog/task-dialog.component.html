@@ -1,0 +1,37 @@
+<div class="dialog-title">
+  <h1 mat-dialog-title>{{ dialogTitle }}</h1> 
+</div>
+
+
+<mat-dialog-content [formGroup]="form" class="dialog-content">
+
+  <mat-form-field>
+      <input matInput
+              placeholder="Title"
+             formControlName="title"
+             class="task-title">
+  </mat-form-field>
+
+  <mat-form-field>
+      <mat-select placeholder="Select color"
+          formControlName="color">
+          <mat-option value="#feff9c">
+              YELLOW</mat-option>
+          <mat-option value="#7afcff">
+              BLUE</mat-option>
+          <mat-option value="#ff7eb9">
+              PINK</mat-option>
+      </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <textarea matInput placeholder="Description"
+        formControlName="description" class="description-area">
+    </textarea>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button"(click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+</mat-dialog-actions>

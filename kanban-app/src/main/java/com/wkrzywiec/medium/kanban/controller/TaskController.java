@@ -2,7 +2,6 @@ package com.wkrzywiec.medium.kanban.controller;
 
 import com.wkrzywiec.medium.kanban.model.Task;
 import com.wkrzywiec.medium.kanban.model.TaskDTO;
-import com.wkrzywiec.medium.kanban.repository.TaskRepository;
 import com.wkrzywiec.medium.kanban.service.TaskService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -10,13 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/tasks")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class TaskController {
 
     private final TaskService taskService;
@@ -44,6 +42,23 @@ public class TaskController {
                         HttpStatus.OK);
             } else {
                 return noTaskFoundResponse(id);
+            }
+        } catch (Exception e) {
+            return errorResponse();
+        }
+    }
+
+    @GetMapping("")
+    @ApiOperation(value="Find a task info by its title", response = Task.class)
+    public ResponseEntity<?> getTaskByTitle(@RequestParam String title){
+        try {
+            Optional<Task> optTask = taskService.getTaskByTitle(title);
+            if (optTask.isPresent()) {
+                return new ResponseEntity<>(
+                        optTask.get(),
+                        HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("No task found with a title: " + title, HttpStatus.NOT_FOUND);
             }
         } catch (Exception e) {
             return errorResponse();

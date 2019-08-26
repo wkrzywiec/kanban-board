@@ -1,0 +1,63 @@
+<div class="page-container">
+  <div class="page-title">
+    <h1>{{kanban?.title}}</h1>
+  </div>
+  <div>
+    <button mat-raised-button (click)="openDialogForNewTask()">+ Create Task</button>
+  </div>
+  <div class="kanban-board">
+    <div class="list-container">
+        <h2>To do</h2>
+      <div
+        cdkDropList
+        id="todo"
+        [cdkDropListData]="todos"
+        [cdkDropListConnectedTo]="['inpro', 'done']"
+        class="board-list"
+        (cdkDropListDropped)="drop($event)">
+        <div class="sticky-note" *ngFor="let task of todos" cdkDrag
+         [style.background-color]="task.color"
+         (dblclick)="openTaskDialog($event)"
+         id="{{task.id}}">
+          {{task.title}}
+        </div>
+      </div>
+    </div>
+
+    <div class="list-container">
+      <h2>In Progress</h2>
+      <div
+      cdkDropList
+      id="inpro"
+      [cdkDropListData]="inprogress"
+      [cdkDropListConnectedTo]="['todo', 'done']"
+      class="board-list"
+      (cdkDropListDropped)="drop($event)">
+        <div class="sticky-note" *ngFor="let task of inprogress" cdkDrag
+        [style.background-color]="task.color"
+        (dblclick)="openTaskDialog($event)"
+         id="{{task.id}}">
+          {{task.title}}
+        </div>
+      </div>
+  </div>
+
+    <div class="list-container">
+        <h2>Done</h2>
+        <div
+        cdkDropList
+        id="done"
+        [cdkDropListData]="dones"
+        [cdkDropListConnectedTo]="['todo', 'inpro']"
+        class="board-list"
+        (cdkDropListDropped)="drop($event)">
+          <div class="sticky-note" *ngFor="let task of dones" cdkDrag
+          [style.background-color]="task.color"
+          (dblclick)="openTaskDialog($event)"
+          id="{{task.id}}">
+            {{task.title}}
+          </div>
+        </div>
+    </div>
+  </div>
+</div>

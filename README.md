@@ -13,6 +13,8 @@ As already stated this project is an implementation of such board and made of 3 
 The entry point for a user is a website which is available under the
 address: **http://localhost:4200/**
 
+---
+
 ### Prerequisites
 
 In order to run this application you need to install two tools: **Docker** & **Docker Compose**.
@@ -20,6 +22,9 @@ In order to run this application you need to install two tools: **Docker** & **D
 Instructions how to install **Docker** on [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) , [Windows](https://docs.docker.com/docker-for-windows/install/) , [Mac](https://docs.docker.com/docker-for-mac/install/) .
 
 **Dosker Compose** is already included in installation packs for *Windows* and *Mac*, so only Ubuntu users needs to follow [this instructions](https://docs.docker.com/compose/install/) .
+
+
+
 
 ### How to run it?
 
@@ -35,6 +40,9 @@ If you want to stop it use following command:
 $ docker-compose down
 ```
 
+
+---
+
 #### kanban-postgres (Database)
 
 PostgreSQL database contains only single schema with two tables - kanban
@@ -43,13 +51,10 @@ and task table.
 After running the app it can be accessible using this connectors:
 
 
-Host: *localhost*
-
-Database: *kanban*
-
-User: *kanban*
-
-Password: *kanban*
+- Host: *localhost*
+- Database: *kanban*
+- User: *kanban*
+- Password: *kanban*
 
 
 Like other parts of application Postgres database is containerized and
@@ -70,6 +75,8 @@ kanban-postgres:
       - POSTGRES_PASSWORD:kanban
 ```
 
+
+
 #### kanban-app (REST API)
 
 This is a Spring Boot (Java) based application that connects with a
@@ -81,11 +88,12 @@ Full list of available REST endpoints could be found in Swagger UI,
 which could be called using link: **http://localhost:8080/swagger-ui.html**
 
 
-![swagger-ui][./assets/swagger.png]
+![swagger-ui](https://github.com/wkrzywiec/kanban-board/blob/master/assets/swagger.png)
 
 
 This app is also put in Docker container and its definition can be found
 in a file *kanban-app/Dockerfile*. 
+
 
 
 #### kanban-ui (Frontend)

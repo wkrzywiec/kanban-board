@@ -10,7 +10,8 @@ As already stated this project is an implementation of such board and made of 3 
 - Java backend (Spring Boot)
 - Angular frontend
 
-The entry point for a user is a website
+The entry point for a user is a website which is available under the
+address: **http://localhost:4200/**
 
 ### Prerequisites
 
@@ -34,7 +35,63 @@ If you want to stop it use following command:
 $ docker-compose down
 ```
 
-#### Database
-#### REST API
-#### Frontend
+#### kanban-postgres (Database)
 
+PostgreSQL database contains only single schema with two tables - kanban
+and task table.
+
+After running the app it can be accessible using this connectors:
+
+
+Host: *localhost*
+
+Database: *kanban*
+
+User: *kanban*
+
+Password: *kanban*
+
+
+Like other parts of application Postgres database is containerized and
+the definition of its Docker container can be found in
+*docker-compose.yml* file.
+
+```yml
+kanban-postgres:
+    image: "postgres:9.6-alpine"
+    container_name: kanban-postgres
+    volumes:
+      - kanban-data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB:kanban
+      - POSTGRES_USER:kanban
+      - POSTGRES_PASSWORD:kanban
+```
+
+#### kanban-app (REST API)
+
+This is a Spring Boot (Java) based application that connects with a
+database that and expose the REST endpoints that can be consumed by
+frontend. It supports multiple HTTP REST methods like GET, POST, PUT and
+DELETE for two resources - kanban & task.
+
+Full list of available REST endpoints could be found in Swagger UI,
+which could be called using link: **http://localhost:8080/swagger-ui.html**
+
+
+![swagger-ui][./assets/swagger.png]
+
+
+This app is also put in Docker container and its definition can be found
+in a file *kanban-app/Dockerfile*. 
+
+
+#### kanban-ui (Frontend)
+
+This is a real endpoint for a user where they can manipulate their
+kanbans and tasks. It consumes the REST API endpoints provided by
+*kanban-app*.
+
+It can be entered using link: **http://localhost:4200/**

@@ -21,6 +21,17 @@ export class KanbanService {
     return this.http.get<Kanban>(this.kanbanAppUrl + '/kanbans/' + id);
   }
 
+  saveNewKanban(title: string): Observable<string> {
+    let headers = new HttpHeaders({'Content-Type': 'application/json' });
+    let options = { headers: headers };
+    let jsonObject = this.prepareTiTleJsonObject(title);
+    return this.http.post<string>(
+      this.kanbanAppUrl + '/kanbans/',
+      jsonObject,
+      options
+    );
+  }
+  
   saveNewTaskInKanban(kanbanId: String, task: Task): Observable<Task> {
     let headers = new HttpHeaders({'Content-Type': 'application/json' });
     let options = { headers: headers };
@@ -29,4 +40,12 @@ export class KanbanService {
       task,
       options);
   }
+
+  private prepareTiTleJsonObject(title: string) {
+    const object = {
+      title: title
+    }
+    return JSON.stringify(object);
+  }
+
 }

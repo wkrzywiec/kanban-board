@@ -1,0 +1,17 @@
+<div class="dialog-title">
+  <h1 mat-dialog-title>Create New Kanban</h1> 
+</div>
+
+
+<mat-dialog-content [formGroup]="form" class="dialog-content">
+
+  <mat-form-field class="kanban-title">
+      <input matInput
+              placeholder="Title"
+             formControlName="title">
+  </mat-form-field>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button"(click)="close()">Close</button>
+  <button class="mat-raised-button mat-primary"(click)="save()">Save</button>
+</mat-dialog-actions>

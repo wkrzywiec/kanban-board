@@ -13,6 +13,8 @@ As already stated this project is an implementation of such board and made of 3 
 The entry point for a user is a website which is available under the
 address: **http://localhost:4200/**
 
+![Kanban][./kanban.gif]
+
 ---
 
 ### Prerequisites

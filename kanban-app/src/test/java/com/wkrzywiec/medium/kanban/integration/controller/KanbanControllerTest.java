@@ -1,4 +1,4 @@
-package com.wkrzywiec.medium.kanban.integration;
+package com.wkrzywiec.medium.kanban.integration.controller;
 
 import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.model.Task;

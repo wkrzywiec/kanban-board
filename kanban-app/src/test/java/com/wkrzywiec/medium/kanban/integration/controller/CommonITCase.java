@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @TestPropertySource(
         locations = "classpath:application-integrationtest.properties")
-public class CommonTest {
+public class CommonITCase {
 
     @Autowired
     private KanbanRepository kanbanRepository;

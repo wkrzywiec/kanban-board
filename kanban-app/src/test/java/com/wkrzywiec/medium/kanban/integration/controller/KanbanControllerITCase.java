@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class KanbanControllerTest extends CommonTest {
+public class KanbanControllerITCase extends CommonITCase {
 
     private String baseURL;
 

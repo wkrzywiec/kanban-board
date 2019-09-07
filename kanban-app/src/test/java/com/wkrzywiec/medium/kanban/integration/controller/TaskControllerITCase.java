@@ -19,7 +19,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TaskControllerTest extends CommonTest {
+public class TaskControllerITCase extends CommonITCase {
 
     private String baseURL;
 

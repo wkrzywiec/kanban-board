@@ -22,7 +22,7 @@ import static org.junit.Assert.assertNotNull;
 @SpringBootTest
 @TestPropertySource(
         locations = "classpath:application-integrationtest.properties")
-public class KanbanServiceTest {
+public class KanbanServiceITCase {
 
     @Autowired
     private KanbanRepository kanbanRepository;

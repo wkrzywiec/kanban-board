@@ -1,9 +1,7 @@
-package com.wkrzywiec.medium.kanban.unit.service;
+package com.wkrzywiec.medium.kanban.service;
 
 import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
-import com.wkrzywiec.medium.kanban.service.KanbanService;
-import com.wkrzywiec.medium.kanban.service.KanbanServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +11,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;

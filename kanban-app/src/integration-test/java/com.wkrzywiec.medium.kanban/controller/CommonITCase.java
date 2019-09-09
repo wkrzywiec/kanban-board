@@ -1,6 +1,10 @@
-package com.wkrzywiec.medium.kanban.integration.controller;
+package com.wkrzywiec.medium.kanban.controller;
 
-import com.wkrzywiec.medium.kanban.model.*;
+import com.wkrzywiec.medium.kanban.model.Kanban;
+import com.wkrzywiec.medium.kanban.model.KanbanDTO;
+import com.wkrzywiec.medium.kanban.model.Task;
+import com.wkrzywiec.medium.kanban.model.TaskDTO;
+import com.wkrzywiec.medium.kanban.model.TaskStatus;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import com.wkrzywiec.medium.kanban.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +13,10 @@ import org.springframework.test.context.TestPropertySource;
 import java.util.ArrayList;
 import java.util.Optional;
 
-@TestPropertySource(
-        locations = "classpath:application-integrationtest.properties")
+@TestPropertySource( properties = {
+        "spring.datasource.url=jdbc:h2:mem:test",
+        "spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.H2Dialect"
+})
 public class CommonITCase {
 
     @Autowired

@@ -1,11 +1,9 @@
-package com.wkrzywiec.medium.kanban.integration.service;
+package com.wkrzywiec.medium.kanban.service;
 
-import com.wkrzywiec.medium.kanban.integration.config.H2DatabaseConfig4Test;
+import com.wkrzywiec.medium.kanban.config.H2DatabaseConfig4Test;
 import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.model.KanbanDTO;
 import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
-import com.wkrzywiec.medium.kanban.service.KanbanService;
-import com.wkrzywiec.medium.kanban.service.KanbanServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

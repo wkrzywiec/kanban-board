@@ -105,6 +105,8 @@
 				<version>3.0.0-M3</version>
 				<executions>
 					<execution>
+						<id>failsafe-integration-tests</id>
+						<phase>integration-test</phase>
 						<goals>
 							<goal>integration-test</goal>
 							<goal>verify</goal>
@@ -115,7 +117,6 @@
 					</execution>
 				</executions>
 			</plugin>
-			<!--	Generate Java test coverage	-->
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>

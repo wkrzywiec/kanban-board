@@ -17,6 +17,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<skip.integration.tests>false</skip.integration.tests>
+		<sonar.exclusions>**/model/**,**/config/**,**/KanbanApplication.java</sonar.exclusions>
 	</properties>
 
 	<dependencies>

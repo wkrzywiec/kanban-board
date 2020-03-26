@@ -26,6 +26,8 @@ services:
   kanban-ui:
     build: ./kanban-ui
     container_name: kanban-ui
+    environment:
+      - KANBAN_APP_URL=http://kanban-app:8080
     ports:
       - 4200:80
     links:

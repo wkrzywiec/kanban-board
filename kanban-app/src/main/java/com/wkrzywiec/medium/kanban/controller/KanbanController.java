@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/kanbans")
+@RequestMapping("/kanbans")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:4200")
 public class KanbanController {

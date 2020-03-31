@@ -3,13 +3,14 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Kanban } from '../model/kanban/kanban';
 import { Task } from '../model/task/task';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KanbanService {
 
-  private kanbanAppUrl = "http://localhost:8080"
+  private kanbanAppUrl = environment.kanbanAppUrl
   
   constructor(private http: HttpClient) { }
 

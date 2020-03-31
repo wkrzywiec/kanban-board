@@ -23,7 +23,7 @@ More information about this project you can found in blog post: https://medium.c
 
 In order to run this application you need to install two tools: **Docker** & **Docker Compose**.
 
-Instructions how to install **Docker** on [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/) , [Windows](https://docs.docker.com/docker-for-windows/install/) , [Mac](https://docs.docker.com/docker-for-mac/install/) .
+Instructions how to install **Docker** on [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Windows](https://docs.docker.com/docker-for-windows/install/) , [Mac](https://docs.docker.com/docker-for-mac/install/) .
 
 **Dosker Compose** is already included in installation packs for *Windows* and *Mac*, so only Ubuntu users needs to follow [this instructions](https://docs.docker.com/compose/install/) .
 
@@ -79,8 +79,6 @@ kanban-postgres:
       - POSTGRES_PASSWORD:kanban
 ```
 
-
-
 #### kanban-app (REST API)
 
 This is a Spring Boot (Java) based application that connects with a
@@ -89,7 +87,7 @@ frontend. It supports multiple HTTP REST methods like GET, POST, PUT and
 DELETE for two resources - kanban & task.
 
 Full list of available REST endpoints could be found in Swagger UI,
-which could be called using link: **http://localhost:8080/swagger-ui.html**
+which could be called using link: **http://localhost:8080/api/swagger-ui.html**
 
 
 ![swagger-ui](https://github.com/wkrzywiec/kanban-board/blob/master/assets/swagger.png)

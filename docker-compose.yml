@@ -18,6 +18,9 @@ services:
     container_name: kanban-app
     environment:
       - DB_SERVER=kanban-postgres
+      - POSTGRES_DB=kanban
+      - POSTGRES_USER=kanban
+      - POSTGRES_PASSWORD=kanban
     ports:
       - 8080:8080
     links:

@@ -10,8 +10,7 @@ As already stated this project is an implementation of such board and made of 3 
 - Java backend (Spring Boot)
 - Angular frontend
 
-The entry point for a user is a website which is available under the
-address: **http://localhost:4200/**
+The entry point for a user is a website which is available under the address: **http://localhost:4200/**
 
 ![Kanban](https://github.com/wkrzywiec/kanban-board/blob/master/assets/kanban.gif)
 
@@ -23,27 +22,24 @@ More information about this project you can found in blog post: https://medium.c
 
 In order to run this application you need to install two tools: **Docker** & **Docker Compose**.
 
-Instructions how to install **Docker** on [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Windows](https://docs.docker.com/docker-for-windows/install/) , [Mac](https://docs.docker.com/docker-for-mac/install/) .
+Instructions how to install **Docker** on [Ubuntu](https://docs.docker.com/install/linux/docker-ce/ubuntu/), [Windows](https://docs.docker.com/docker-for-windows/install/), [Mac](https://docs.docker.com/docker-for-mac/install/).
 
-**Dosker Compose** is already included in installation packs for *Windows* and *Mac*, so only Ubuntu users needs to follow [this instructions](https://docs.docker.com/compose/install/) .
-
-
+**Docker Compose** is already included in installation packs for *Windows* and *Mac*, so only Ubuntu users needs to follow [this instructions](https://docs.docker.com/compose/install/).
 
 
 ### How to run it?
 
-An entire application can be ran with a single command in a terminal:
+The entire application can be run with a single command on a terminal:
 
 ```
 $ docker-compose up -d
 ```
 
-If you want to stop it use following command:
+If you want to stop it, use the following command:
 
 ```
 $ docker-compose down
 ```
-
 
 ---
 
@@ -52,8 +48,7 @@ $ docker-compose down
 PostgreSQL database contains only single schema with two tables - kanban
 and task table.
 
-After running the app it can be accessible using this connectors:
-
+After running the app it can be accessible using these connectors:
 
 - Host: *localhost*
 - Database: *kanban*

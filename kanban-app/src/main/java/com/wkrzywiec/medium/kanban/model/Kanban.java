@@ -23,11 +23,9 @@ public class Kanban {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     @ApiModelProperty(position = 1)
     private Long id;
 
-    @Column(name = "title")
     @ApiModelProperty(position = 2)
     private String title;
 

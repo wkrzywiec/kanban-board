@@ -35,4 +35,5 @@ by default should support a PostgreSQL instance running in the kubernetes cluste
  * Demonstrate how to expose this externally (viewable outside the kubernetes cluster).
  * Demonstrate some form of secrets-management for security sensitive configurations such as the database credentials or connection string.
  * Improve front-end security by upgrading the base container used for the `kanban-ui` Docker image.
+ * Can you optimize the size of the backend `kanban-app` Docker image?
  * Use GitHub Actions (workflows) to automate parts of the build and deployment process.

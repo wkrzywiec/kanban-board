@@ -2,7 +2,7 @@
 
 ## Overview
 
-This sample project is forked from https://github.com/wkrzywiec/kanban-board
+This sample project is forked from [kanban-board](https://github.com/wkrzywiec/kanban-board)
 
 The repo represents a working example of a Web-App that uses a backend API service (`kanban-app`) with a PostgreSQL database,
 and a separate AngularJS frontend (`kanban-ui`).
@@ -18,22 +18,22 @@ by default should support a PostgreSQL instance running in the kubernetes cluste
 
 ### Things to consider in your solution
 
- * Fork this repo on GitHub and commit all your work to your fork.  When completed send the link to your fork of the repo with john.kirkham@ratehub.ca.
- * The Dockerfiles exist already for the `kanban-app` and `kanban-ui` but you will need to build and push the Docker images to a public Docker registry for
- them to be accessable from within a kubernetes cluster.  ([DockerHub](https://hub.docker.com/) or [GCR](https://cloud.google.com/container-registry/)
- are possible solutions for this.)
- * To manage making this installation reconfigurable and relocatable it is strongly recommended that you use a templating solution like [Helm](https://helm.sh/),
- an overlay system like [Kustomize](https://kustomize.io/), or a combination of the two.  Similar alternative are acceptable.
- * Try to follow best practices, especially with regards to basic security in your kubernetes deployment.
- * Tools like [MiniKube](https://minikube.sigs.k8s.io/docs/start/), [KinD](https://kind.sigs.k8s.io/docs/user/quick-start/), [microk8s](https://microk8s.io/),
- or similar will be useful in developing and testing your solution.  Alternatively, free trials are offered by cloud providers like DigitalOcean,
- GCP, Azure, AWS, etc. and may be used for this.
- * If you encounter any problems with any part of the task or are blocked by something, please add a `KNOWN-ISSUES.md` file to your repo and document it there.
+* Fork this repo on GitHub and commit all your work to your fork.  When completed send the link to your fork of the repo with john.kirkham@ratehub.ca.
+* The Dockerfiles exist already for the `kanban-app` and `kanban-ui` but you will need to build and push the Docker images to a public Docker registry for
+them to be accessable from within a kubernetes cluster.  ([DockerHub](https://hub.docker.com/) or [GCR](https://cloud.google.com/container-registry/)
+are possible solutions for this.)
+* To manage making this installation reconfigurable and relocatable it is strongly recommended that you use a templating solution like [Helm](https://helm.sh/),
+an overlay system like [Kustomize](https://kustomize.io/), or a combination of the two.  Similar alternative are acceptable.
+* Try to follow best practices, especially with regards to basic security in your kubernetes deployment.
+* Tools like [MiniKube](https://minikube.sigs.k8s.io/docs/start/), [KinD](https://kind.sigs.k8s.io/docs/user/quick-start/), [microk8s](https://microk8s.io/),
+or similar will be useful in developing and testing your solution.  Alternatively, free trials are offered by cloud providers like DigitalOcean,
+GCP, Azure, AWS, etc. and may be used for this.
+* If you encounter any problems with any part of the task or are blocked by something, please add a `KNOWN-ISSUES.md` file to your repo and document it there.
 
 ### Bonus/Optional Tasks
 
- * Demonstrate how to expose this externally (viewable outside the kubernetes cluster).
- * Demonstrate some form of secrets-management for security sensitive configurations such as the database credentials or connection string.
- * Improve front-end security by upgrading the base container used for the `kanban-ui` Docker image.
- * Can you optimize the size of the backend `kanban-app` Docker image?
- * Use GitHub Actions (workflows) to automate parts of the build and deployment process.
+* Demonstrate how to expose this externally (viewable outside the kubernetes cluster).
+* Demonstrate some form of secrets-management for security sensitive configurations such as the database credentials or connection string.
+* Improve front-end security by upgrading the base container used for the `kanban-ui` Docker image.
+* Can you optimize the size of the backend `kanban-app` Docker image?
+* Use GitHub Actions (workflows) to automate parts of the build and deployment process.

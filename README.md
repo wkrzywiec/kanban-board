@@ -24,6 +24,7 @@ them to be accessable from within a kubernetes cluster.  ([DockerHub](https://hu
 are possible solutions for this.)
 * To manage making this installation reconfigurable and relocatable it is strongly recommended that you use a templating solution like [Helm](https://helm.sh/),
 an overlay system like [Kustomize](https://kustomize.io/), or a combination of the two.  Similar alternative are acceptable.
+* As part of the solution, include a sample deployment.  This means Helm values.yaml file(s) for a sample deployment and/or environment overlay files for Kustomize (or the equivalent if another approach is taken).  Places these under an `example_env` directory in the root of the repo.
 * Try to follow best practices, especially with regards to basic security in your kubernetes deployment.
 * Tools like [MiniKube](https://minikube.sigs.k8s.io/docs/start/), [KinD](https://kind.sigs.k8s.io/docs/user/quick-start/), [microk8s](https://microk8s.io/),
 or similar will be useful in developing and testing your solution.  Alternatively, free trials are offered by cloud providers like DigitalOcean,

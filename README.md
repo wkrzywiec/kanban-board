@@ -18,18 +18,18 @@ by default should support a PostgreSQL instance running in the kubernetes cluste
 
 ### Things to consider in your solution
 
-* Fork this repo on GitHub and commit all your work to your fork.  When completed send the link to your fork of the repo with john.kirkham@ratehub.ca.
+* Fork this repo on GitHub and commit all your work to your fork.  When completed send the link to your fork of the repo to john.kirkham@ratehub.ca
 * The Dockerfiles exist already for the `kanban-app` and `kanban-ui` but you will need to build and push the Docker images to a public Docker registry for
 them to be accessable from within a kubernetes cluster.  ([DockerHub](https://hub.docker.com/) or [GCR](https://cloud.google.com/container-registry/)
 are possible solutions for this.)
 * To manage making this installation reconfigurable and relocatable it is strongly recommended that you use a templating solution like [Helm](https://helm.sh/),
 an overlay system like [Kustomize](https://kustomize.io/), or a combination of the two.  Similar alternative are acceptable.
-* As part of the solution, include a sample deployment.  This means Helm values.yaml file(s) for a sample deployment and/or environment overlay files for Kustomize (or the equivalent if another approach is taken).  Places these under an `example_env` directory in the root of the repo.
+* As part of the solution, include a sample deployment.  This means Helm values.yaml file(s) for a sample deployment and/or environment overlay files for Kustomize (or the equivalent if another approach is taken).  Places these under an `example_env` directory in the root of the repo.  (We do not need to see the running instance hosted by your own kubernetes cluster but we should be able to use your example to easily deploy it to our own clusters.)
 * Try to follow best practices, especially with regards to basic security in your kubernetes deployment.
 * Tools like [MiniKube](https://minikube.sigs.k8s.io/docs/start/), [KinD](https://kind.sigs.k8s.io/docs/user/quick-start/), [microk8s](https://microk8s.io/),
 or similar will be useful in developing and testing your solution.  Alternatively, free trials are offered by cloud providers like DigitalOcean,
 GCP, Azure, AWS, etc. and may be used for this.
-* If you encounter any problems with any part of the task or are blocked by something, please add a `KNOWN-ISSUES.md` file to your repo and document it there.
+* If you encounter any problems with any part of the task or are blocked by something, please add a `KNOWN-ISSUES.md` file to your repo and document it there.  If you have questions and need clarifications to complete the exercise please send them to john.kirkham@ratehub.ca
 
 ### Bonus/Optional Tasks
 

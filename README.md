@@ -18,7 +18,7 @@ by default should support a PostgreSQL instance running in the kubernetes cluste
 
 ### Things to consider in your solution
 
-* Fork this repo on GitHub and commit all your work to your fork.  When completed send the link to your fork of the repo to john.kirkham@ratehub.ca
+* Fork this repo on GitHub and commit all your work to your fork.  When completed send the link to your fork of the repo to john.kirkham@ratehub.ca, fritz@ratehub.ca, and allison.colin-thome@ratehub.ca
 * The Dockerfiles exist already for the `kanban-app` and `kanban-ui` but you will need to build and push the Docker images to a public Docker registry for
 them to be accessable from within a kubernetes cluster.  ([DockerHub](https://hub.docker.com/) or [GCR](https://cloud.google.com/container-registry/)
 are possible solutions for this.)
@@ -29,7 +29,8 @@ an overlay system like [Kustomize](https://kustomize.io/), or a combination of t
 * Tools like [MiniKube](https://minikube.sigs.k8s.io/docs/start/), [KinD](https://kind.sigs.k8s.io/docs/user/quick-start/), [microk8s](https://microk8s.io/),
 or similar will be useful in developing and testing your solution.  Alternatively, free trials are offered by cloud providers like DigitalOcean,
 GCP, Azure, AWS, etc. and may be used for this.
-* If you encounter any problems with any part of the task or are blocked by something, please add a `KNOWN-ISSUES.md` file to your repo and document it there.  If you have questions and need clarifications to complete the exercise please send them to john.kirkham@ratehub.ca
+* If you encounter any problems with any part of the task or are blocked by something, please add a `KNOWN-ISSUES.md` file to your repo and document it there.  (Note: there are known issues with the App.  You don't have to fix the code; we just want to see you can work with Docker and Kubernetes.)
+* If you have questions and need clarifications to complete the exercise please send them to john.kirkham@ratehub.ca
 
 ### Bonus/Optional Tasks
 

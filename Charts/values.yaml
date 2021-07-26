@@ -1,0 +1,45 @@
+kanban_ui:
+  image:
+    repository: lakshmi1995/kanban-ui
+    tag: v
+    pullPolicy: Always
+  replicas: 1
+  fullname: kanban-ui
+  serviceType: LoadBalancer
+
+kanban_app:
+  image:
+    repository: lakshmi1995/kanban-app
+    tag: v
+    pullPolicy: Always
+  replicas: 1
+  fullname: kanban-app
+  serviceType: ClusterIP
+
+postgres:  
+  image:
+    repository: postgres
+    tag: 9.6-alpine
+    pullPolicy: Always
+  replicas: 1
+  name: master
+  resources: {}
+  persistence:
+    enabled: true
+    accessMode: ReadWriteOnce
+    size: 4Gi
+  service:
+    type: ClusterIP
+    port: 5432
+    externalIPs: []
+  terminationGracePeriodSeconds: 3600
+  serviceType: ClusterIP
+
+secrets:
+  fullname: postgres-config
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: password
+  POSTGRES_INITDB_ARGS: --data-checksums
+
+configs: {}

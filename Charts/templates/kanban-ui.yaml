@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.kanban_ui.fullname }}
+  labels:
+    app: {{ .Values.kanban_ui.fullname }}
+    group: frontend
+    app.kubernetes.io/name: {{ .Values.kanban_ui.fullname }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.kanban_ui.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.kanban_ui.fullname }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.kanban_ui.fullname }}
+    spec:
+      containers:
+        - name: {{ .Values.kanban_ui.fullname }}
+          image: {{ .Values.kanban_ui.image.repository }}:{{ .Values.kanban_ui.image.tag }}
+          imagePullPolicy: {{ .Values.kanban_ui.image.pullPolicy }}
+          ports:
+            - containerPort: 80

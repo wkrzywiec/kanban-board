@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.kanban_app.fullname }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.kanban_app.fullname }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.kanban_app.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Values.kanban_app.fullname }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.kanban_app.fullname }}
+    spec:
+      containers:
+        - name: {{ .Values.kanban_app.fullname }}
+          image: {{ .Values.kanban_app.image.repository }}:{{ .Values.kanban_app.image.tag }}
+          imagePullPolicy: {{ .Values.kanban_app.image.pullPolicy }}
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.secrets.fullname }}
+          env:
+            - name: DB_SERVER
+              value: postgres

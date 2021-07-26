@@ -1,0 +1,25 @@
+name: Docker Image CI
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USERNAME}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        echo "$DOCKER_PASSWORD" | docker login -u $DOCKER_USER --password-stdin
+    - name: Build the kanban-app Docker image
+      run: cd kanban-app && docker build . --file Dockerfile --tag lakshmi1995/kanban-app:v${{ github.run_id }}
+    - name: Build the kanban-ui Docker image
+      run: cd kanban-ui && docker build . --file Dockerfile --tag lakshmi1995/kanban-ui:v${{ github.run_id }}
+    - name: Docker Push kanban-ui
+      run: docker push lakshmi1995/kanban-ui:v${{ github.run_id }}
+    - name: Docker Push kanban-app
+      run: docker push lakshmi1995/kanban-app:v${{ github.run_id }}

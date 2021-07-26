@@ -1,7 +1,7 @@
 kanban_ui:
   image:
     repository: lakshmi1995/kanban-ui
-    tag: v
+    tag: v1067550938
     pullPolicy: Always
   replicas: 1
   fullname: kanban-ui
@@ -10,7 +10,7 @@ kanban_ui:
 kanban_app:
   image:
     repository: lakshmi1995/kanban-app
-    tag: v
+    tag: v1067550938
     pullPolicy: Always
   replicas: 1
   fullname: kanban-app

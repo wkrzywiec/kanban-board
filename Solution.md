@@ -33,7 +33,6 @@ helm install kanbanapp -n namespace ./
 | fullname | Name of the application | string | yes |
 | serviceType | Application service type | string | yes |
 
-
 ## Kanban UI Helm Variables
 
 | Name | Description | Type | Required |

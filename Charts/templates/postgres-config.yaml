@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.secrets.fullname }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.secrets.fullname }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+data:
+  POSTGRES_DB: {{ .Values.secrets.POSTGRES_DB }}
+  POSTGRES_USER: {{ .Values.secrets.POSTGRES_USER }}
+  POSTGRES_PASSWORD: {{ .Values.secrets.POSTGRES_PASSWORD }}

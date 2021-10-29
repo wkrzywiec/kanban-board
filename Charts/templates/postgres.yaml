@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "postgresql.master.fullname" . }}
+  labels:
+    app: {{ template "postgresql.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    component: "{{ .Values.postgres.name }}"
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ template "postgresql.fullname" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.postgres.replicas }}
+  selector:
+    matchLabels:
+      app: {{ template "postgresql.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "postgresql.name" . }}
+    spec:
+      volumes: 
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: {{ template "postgresql.name" . }}-persistent-volume-claim
+      containers:
+        - name: {{ template "postgresql.name" . }}
+          image: {{ .Values.postgres.image.repository }}:{{ .Values.postgres.image.tag }}
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.secrets.fullname }}
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql/data

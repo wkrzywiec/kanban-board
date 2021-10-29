@@ -14,13 +14,15 @@ import { HomeComponent } from './home/home.component';
 import { KanbanComponent } from './kanban/kanban.component';
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { KanbanDialogComponent } from './kanban-dialog/kanban-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     KanbanComponent,
-    TaskDialogComponent
+    TaskDialogComponent,
+    KanbanDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +40,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [TaskDialogComponent]
+  entryComponents: [TaskDialogComponent, KanbanDialogComponent]
 })
 export class AppModule { }

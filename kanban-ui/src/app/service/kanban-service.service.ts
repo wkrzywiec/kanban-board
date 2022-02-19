@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Kanban } from '../model/kanban/kanban';
 import { Task } from '../model/task/task';
@@ -26,20 +26,25 @@ export class KanbanService {
     let headers = new HttpHeaders({'Content-Type': 'application/json' });
     let options = { headers: headers };
     let jsonObject = this.prepareTiTleJsonObject(title);
-    return this.http.post<string>(
-      this.kanbanAppUrl + '/kanbans/',
-      jsonObject,
-      options
+    return this.http.get<string>(
+      this.kanbanAppUrl + '/kanbans?title=' + title
     );
   }
   
-  saveNewTaskInKanban(kanbanId: String, task: Task): Observable<Task> {
+  saveNewTaskInKanban(kanbanId: string, task: Task): Observable<Task> {
     let headers = new HttpHeaders({'Content-Type': 'application/json' });
     let options = { headers: headers };
-    return this.http.post<Task>(
-      this.kanbanAppUrl + '/kanbans/' + kanbanId + '/tasks/',
-      task,
-      options);
+    
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("kanbanId", kanbanId);
+    queryParams = queryParams.append("title", task.title);
+    queryParams = queryParams.append("description", task.description);
+    queryParams = queryParams.append("status", task.status);
+
+    return this.http.get<Task>(
+      this.kanbanAppUrl + '/tasks',
+      { params: queryParams }
+      );
   }
 
   private prepareTiTleJsonObject(title: string) {

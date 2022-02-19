@@ -54,14 +54,9 @@ public class KanbanController {
     @ApiOperation(value="Find a Kanban board info by its title", response = Kanban.class)
     public ResponseEntity<?> getKanbanByTitle(@RequestParam String title){
         try {
-            Optional<Kanban> optKanban = kanbanService.getKanbanByTitle(title);
-            if (optKanban.isPresent()) {
-                return new ResponseEntity<>(
-                        optKanban.get(),
-                        HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("No kanban found with a title: " + title, HttpStatus.NOT_FOUND);
-            }
+            return new ResponseEntity<>(
+                    kanbanService.saveNewKanban(new KanbanDTO(title)),
+                    HttpStatus.CREATED);
         } catch (Exception e) {
             return errorResponse();
         }

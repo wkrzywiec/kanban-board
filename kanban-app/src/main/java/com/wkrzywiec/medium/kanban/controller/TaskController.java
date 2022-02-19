@@ -2,6 +2,7 @@ package com.wkrzywiec.medium.kanban.controller;
 
 import com.wkrzywiec.medium.kanban.model.Task;
 import com.wkrzywiec.medium.kanban.model.TaskDTO;
+import com.wkrzywiec.medium.kanban.model.TaskStatus;
 import com.wkrzywiec.medium.kanban.service.TaskService;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -50,32 +51,31 @@ public class TaskController {
 
     @GetMapping("")
     @ApiOperation(value="Find a task info by its title", response = Task.class)
-    public ResponseEntity<?> getTaskByTitle(@RequestParam String title){
-        try {
-            Optional<Task> optTask = taskService.getTaskByTitle(title);
-            if (optTask.isPresent()) {
-                return new ResponseEntity<>(
-                        optTask.get(),
-                        HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>("No task found with a title: " + title, HttpStatus.NOT_FOUND);
-            }
-        } catch (Exception e) {
-            return errorResponse();
-        }
-    }
-
-    @PostMapping("/")
-    @ApiOperation(value="Save new task", response = Task.class)
-    public ResponseEntity<?> createTask(@RequestBody TaskDTO taskDTO){
+    public ResponseEntity<?> getTaskByTitle(@RequestParam Long kanbanId, @RequestParam String title, @RequestParam String description, @RequestParam String status){
         try {
             return new ResponseEntity<>(
-                    taskService.saveNewTask(taskDTO),
+                    taskService.saveNewTask(kanbanId, TaskDTO.builder()
+                            .title(title)
+                            .description(description)
+                            .status(TaskStatus.valueOf(status))
+                            .build()),
                     HttpStatus.CREATED);
         } catch (Exception e) {
             return errorResponse();
         }
     }
+
+//    @PostMapping("/")
+//    @ApiOperation(value="Save new task", response = Task.class)
+//    public ResponseEntity<?> createTask(@RequestBody TaskDTO taskDTO){
+//        try {
+//            return new ResponseEntity<>(
+//                    taskService.saveNewTask(taskDTO),
+//                    HttpStatus.CREATED);
+//        } catch (Exception e) {
+//            return errorResponse();
+//        }
+//    }
 
     @PutMapping("/{id}")
     @ApiOperation(value="Update a task with specific id", response = Task.class)

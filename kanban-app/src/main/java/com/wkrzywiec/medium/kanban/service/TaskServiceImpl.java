@@ -1,7 +1,9 @@
 package com.wkrzywiec.medium.kanban.service;
 
+import com.wkrzywiec.medium.kanban.model.Kanban;
 import com.wkrzywiec.medium.kanban.model.Task;
 import com.wkrzywiec.medium.kanban.model.TaskDTO;
+import com.wkrzywiec.medium.kanban.repository.KanbanRepository;
 import com.wkrzywiec.medium.kanban.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
+    private final KanbanRepository kanbanRepository;
 
     @Override
     @Transactional
@@ -40,8 +43,13 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     @Transactional
-    public Task saveNewTask(TaskDTO taskDTO) {
-        return taskRepository.save(convertDTOToTask(taskDTO));
+    public Task saveNewTask(Long kanbanId, TaskDTO taskDTO) {
+        Task task = convertDTOToTask(taskDTO);
+        taskRepository.save(task);
+
+        Kanban kanban = kanbanRepository.findById(kanbanId).get();
+        kanban.addTask(task);
+        return task;
     }
 
     @Override

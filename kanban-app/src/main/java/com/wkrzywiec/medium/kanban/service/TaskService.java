@@ -14,7 +14,7 @@ public interface TaskService {
 
     Optional<Task> getTaskByTitle(String title);
 
-    Task saveNewTask(TaskDTO taskDTO);
+    Task saveNewTask(Long kanbanId, TaskDTO taskDTO);
 
     Task updateTask(Task oldTask, TaskDTO newTaskDTO);
 

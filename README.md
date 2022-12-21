@@ -137,7 +137,7 @@ a2FuYmFu
 
 ```
 * Change your values in secret file as your encoded values
-* to decode your values
+* To decode your values
 
 ```
 echo -n "kanban" | base64 -d

@@ -5,6 +5,4 @@ metadata:
   name: postgres-config
 data:
   DB_SERVER: <db-service-name>.kanban.svc.cluster.local
-  POSTGRES_DB: kanban
-  POSTGRES_USER: kanban
-  POSTGRES_PASSWORD: kanban
+  

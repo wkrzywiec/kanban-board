@@ -129,17 +129,36 @@ server {
     }
 }
 ```
-#### Step 3:
+### Step 3:
+* Change your secret key values to encode values
+```
+echo -n "kanban" | base64
+a2FuYmFu
+
+```
+* Change your values in secret file as your encoded values
+* to decode your values
+
+```
+echo -n "kanban" | base64 -d
+kanban
+
+```
+
+#### Step 4:
 * How to run application on kubernetes?
 
 ```
 kubectl apply -f postgres.yaml
+
+kubectl apply -f secret.yaml
 
 kubectl apply -f configMap.yaml
 
 kubectl apply -f kanban-api.yaml
 
 kubectl apply -f kanban-ui.yaml
+
 ```
 * To list all your resources on Kubernetes run the bellow Command
 

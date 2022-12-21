@@ -22,26 +22,29 @@ spec:
              - containerPort: 8080
 
            env:
-           - name: DB_SERVER   # Setting Database host address from configMap
+           - name: DB_SERVER   # Setting DB Service Name from configMap
              valueFrom: 
-              configMapKeyRef:
-                name: postgres-config  # name of configMap
-                key: DB_SERVER
-           - name: POSTGRES_DB  # Setting Database name from configMap
+               configMapKeyRef:
+                 name: postgres-config  # name of configMap
+                 key: DB_SERVER
+                
+           - name: POSTGRES_DB  # Setting Database name from secret
              valueFrom:
-              configMapKeyRef:
-                name: postgres-config 
-                key: POSTGRES_DB
+               secretKeyRef:
+                 name: secret-config
+                 key: POSTGRES_DB
+
            - name: POSTGRES_USER  # Setting Database username from Secret
              valueFrom:
-              configMapKeyRef:
-                name: postgres-config # Secret Name
-                key:  POSTGRES_USER
+               secretKeyRef:
+                 name: secret-config # Secret Name
+                 key:  POSTGRES_USER
+
            - name:  POSTGRES_PASSWORDD # Setting Database password from Secret
              valueFrom:
-              configMapKeyRef:
-                name: postgres-config
-                key:  POSTGRES_PASSWORD 
+               secretKeyRef:
+                 name: secret-config
+                 key:  POSTGRES_PASSWORD
           
 ---
 apiVersion: v1

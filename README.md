@@ -130,13 +130,13 @@ server {
 }
 ```
 ### Step 3:
-* Change your secret key values to encode values
+* Change your secret key values to encoded values
 ```
 echo -n "kanban" | base64
 a2FuYmFu
 
 ```
-* Change your values in secret file as your encoded values
+* Change the values in secret file as your encoded values
 * To decode your values
 
 ```

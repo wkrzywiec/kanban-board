@@ -1,0 +1,63 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kanban
+  name: deployment-api
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: app-kan
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: app-kan
+    spec:
+       containers:
+         - image: <backend-image>
+           imagePullPolicy: Always
+           name: app-api
+           ports:
+             - containerPort: 8080
+
+           env:
+           - name: DB_SERVER   # Setting DB Service Name from configMap
+             valueFrom: 
+               configMapKeyRef:
+                 name: postgres-config  # name of configMap
+                 key: DB_SERVER
+                
+           - name: POSTGRES_DB  # Setting Database name from secret
+             valueFrom:
+               secretKeyRef:
+                 name: secret-config
+                 key: POSTGRES_DB
+
+           - name: POSTGRES_USER  # Setting Database username from Secret
+             valueFrom:
+               secretKeyRef:
+                 name: secret-config # Secret Name
+                 key:  POSTGRES_USER
+
+           - name:  POSTGRES_PASSWORDD # Setting Database password from Secret
+             valueFrom:
+               secretKeyRef:
+                 name: secret-config
+                 key:  POSTGRES_PASSWORD
+          
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kanban
+  name: service-api
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+      protocol: TCP
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: app-kan
+---

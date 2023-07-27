@@ -1,0 +1,117 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kanban
+---    
+# Here I have used a hostpath
+# Local volumes can only be used as a statically created PersistentVolume. Dynamic provisioning is not supported.
+# If you need to go with Dynamic volumes you may choose AWS EBS or EFS
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  namespace: kanban
+  name: postgres-pv-volume
+  labels:
+    app: postgres
+spec:
+  storageClassName: pv
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: /var/lib/data
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: kanban
+  name: postgres-pv-claim
+  labels:
+    app: postgres
+spec:
+  storageClassName: pv
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: kanban
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:10.1
+          imagePullPolicy: "IfNotPresent"
+
+          env:
+          - name: DB_SERVER   # Setting DB Service Name from configMap
+            valueFrom: 
+              configMapKeyRef:
+                name: postgres-config  # name of configMap
+                key: DB_SERVER
+                
+          - name: POSTGRES_DB  # Setting Database name from secret
+            valueFrom:
+              secretKeyRef:
+                name: secret-config
+                key: POSTGRES_DB
+
+          - name: POSTGRES_USER  # Setting Database username from Secret
+            valueFrom:
+              secretKeyRef:
+                name: secret-config # Secret Name
+                key:  POSTGRES_USER
+
+          - name:  POSTGRES_PASSWORDD # Setting Database password from Secret
+            valueFrom:
+              secretKeyRef:
+                name: secret-config
+                key:  POSTGRES_PASSWORD
+          ports:
+            - containerPort: 5432
+
+          volumeMounts:
+            - mountPath: /var/lib/
+              name: postgredb
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim  
+
+          # envFrom:
+          #   - configMapRef:
+          #       name: postgres-config  
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: kanban
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  type: NodePort
+  ports:
+   - port: 5432
+  selector:
+   app: postgres
+---  

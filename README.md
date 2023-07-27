@@ -100,3 +100,68 @@ kanbans and tasks. It consumes the REST API endpoints provided by
 *kanban-app*.
 
 It can be entered using link: **http://localhost:4200/**
+
+## Application deployment on Kubernetes
+
+#### Step 1:
+* Install K8s on your machine (or) Cluster on the AWS cloud provider
+
+#### Step 2:
+* In order to run this application before you need to change the Nginx proxy file 
+
+```
+server {
+    listen 80;
+    server_name kanban-ui;
+    root /usr/share/nginx/html;
+    index index.html index.html;
+
+    location /api/kanbans {
+        proxy_pass http://<backend-service-name>.<namespace>.svc.cluster.local:8080/api/kanbans;
+    }
+
+    location /api/tasks { 
+        proxy_pass http://<backend-service-name>.<namespace>.svc.cluster.local:8080/api/tasks;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}
+```
+### Step 3:
+* Change your secret key values to encoded values
+```
+echo -n "kanban" | base64
+a2FuYmFu
+
+```
+* Change the values in secret file as your encoded values
+* To decode your values
+
+```
+echo -n "kanban" | base64 -d
+kanban
+
+```
+
+#### Step 4:
+* How to run application on kubernetes?
+
+```
+kubectl apply -f postgres.yaml
+
+kubectl apply -f secret.yaml
+
+kubectl apply -f configMap.yaml
+
+kubectl apply -f kanban-api.yaml
+
+kubectl apply -f kanban-ui.yaml
+
+```
+* To list all your resources on Kubernetes run the bellow Command
+
+```
+kubectl get all -n <name-space>
+```
